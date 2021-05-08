@@ -13,7 +13,7 @@ class Questions extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('element', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
             $table->unsignedSmallInteger('survey_id');
@@ -22,6 +22,7 @@ class Questions extends Migration
             $table->unsignedInteger('parent_id')->nullable();
             $table->unsignedTinyInteger('position')->nullable();
             $table->boolean('required')->default(0);
+            $table->string('options', 1000)->nullable();
             $table->softDeletes();   
             
             //$table->foreign('survey_id')->references('id')->on('survey')->onDelete('cascade');
@@ -35,6 +36,6 @@ class Questions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('element');
     }
 }

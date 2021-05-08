@@ -1,19 +1,46 @@
 @extends('adminlte::page')
 
-@section('title', 'Surveys')
+@section('title', 'Survey')
 
 @section('content_header')
-    <h1>Surveys</h1>
+    <h1>Survey <a href="{{ URL::route('newSurvey') }}" class="btn btn-primary float-right" role="button"><i class="fas fa-plus"></i> New survey</a></h1>
+    
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+<br>
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                @foreach($surveys as $survey)
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-{{$colors[array_rand($colors, 1)]}}">
+                            <div class="inner">
+                                <h3>{{count($survey->data)}}</h3>
+
+                                <p>#{{$survey->id}}: {{$survey->name}}</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-poll"></i>
+                            </div>
+                            <a href="{{ URL::route('getSurvey', ['survey'=>$survey->id]) }}" class="small-box-footer" style="display: inline-block; width:49%;">to survey <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ URL::route('getResults', ['survey'=>$survey->id]) }}" class="small-box-footer" style="display: inline-block; width:49%;">to results <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                @endforeach
+
+            </div>
+        </div>
+    </section>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    
 @stop
