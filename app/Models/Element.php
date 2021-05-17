@@ -25,6 +25,14 @@ class Element extends Model
         return $this->hasMany(Data::class, 'element_id', 'id');
     }
 
+    public function getElementsByParent($parent)
+    {
+        $elements = Element::where('parent_id', $parent)
+                        ->orderBy('position', 'ASC')
+                        ->get();
+        return $elements;
+    }
+
 /*
     public function getparents($quiz_id)
     {

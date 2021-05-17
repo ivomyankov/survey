@@ -30,6 +30,7 @@ class Survey extends Model
         return $this->hasMany(Element::class, 'survey_id', 'id')
                 ->orderBy('parent_id', 'ASC')
                 ->orderBy('position', 'ASC');
+        
     }
 
     public function getSurveysWithElements()
@@ -44,6 +45,14 @@ class Survey extends Model
         $surveys = Survey::with(['data'])
                         ->get();
         return $surveys;
+    }
+
+    public function getSurveyWithElementsByParent($id, $parent)
+    {
+        $survey = Survey::with(['elements'])
+                        ->where('id', $id)
+                        ->get();
+        return $survey;
     }
 
     public function getSurveyWithElementsAndData($id)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\FormServices;
 use App\Models\Survey;
+use App\Models\Element;
 
 class SurveyController extends Controller
 {
@@ -93,6 +94,48 @@ class SurveyController extends Controller
     public function getSurveyPage($survey_id)
     {                  
         return view('dashboard.survey', ['survey_id' => $survey_id]);  
+    }
+
+    public function reposition($survey_id, Request $request)
+    {    
+        $newOrder = [];
+        $oldOrder = [];
+        $data = json_decode($request->getContent(), true);
+        if($data['parent'] == 0){ 
+            $element_id = (int)str_replace("sort_", "", $data['element_id']);
+        } else { 
+            $element_id = (int)str_replace("sub_", "", $data['element_id']);
+        }
+        $elementObj = new Element;
+        $elements = $elementObj->getElementsByParent($data['parent']);         //dd($elements);
+
+        foreach($elements as $key => $element){
+            if($element->id != $element_id){    
+                array_push($oldOrder, $element->id);      
+            } 
+        }
+
+        foreach($oldOrder as $key => $element){
+            if($key != $data['newIndex']){
+                array_push($newOrder, $element);              
+            } else {                
+                array_push($newOrder, $element_id, $element);       
+            }
+        }
+        
+        //dd($oldOrder, $newOrder);
+
+        foreach($newOrder as $key => $element){
+            Element::where('id', $element)
+                ->update(['position' => $key+1]);  
+        }
+
+        $data = [
+            'success' => true,
+            'message'=> $newOrder
+        ];
+        
+        return response()->json($data);
     }
 
 

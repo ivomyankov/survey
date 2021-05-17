@@ -30,7 +30,6 @@ class FormController extends Controller
             
         }
         
-      
         foreach($raw_elements as $key => $element){
             foreach($parents as $key2 => $value){ 
                 if($element->parent_id == $key2){                             
@@ -62,9 +61,10 @@ class FormController extends Controller
                         array_unshift($required, $option->id);
                     }                    
                 }            
-            return $required;
+            
             }
         }
+        return $required;  
     }
 
     public function submitSurvey(SurveyStoreRequest $request, $survey_id)

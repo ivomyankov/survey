@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SurveyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/survey/{$survey}/results', [SurveyController::class, 'getResults'])->name('getResults');
-});
+//Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    //Route::get('/survey/{$survey}/results', [SurveyController::class, 'getResults'])->name('getResults');
+    Route::patch('/survey/{survey}/reposition', [SurveyController::class, 'reposition'])->name('reposition');
+//});

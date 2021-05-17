@@ -82,9 +82,9 @@
 
 
         $("#sortable,#sortable2").sortable({
-            //stop: function(event, ui) {
+            /*stop: function(event, ui) {
                 //alert("New position: " + ui.item.index());
-            //}
+            }*/
             start: function(e, ui) {
                 // creates a temporary attribute on the element with the old index
                 $(this).attr('data-previndex', ui.item.index());
@@ -94,11 +94,45 @@
                 var newIndex = ui.item.index();
                 var oldIndex = $(this).attr('data-previndex');
                 var element_id = ui.item.attr('id');
-                var element_alt = ui.item.attr('alt');
-                alert('id of Item moved = ' + element_id + ' old position = ' + oldIndex + ' new position = ' + newIndex + ' parent = ' + element_alt);
+                var parent = ui.item.attr('alt');
+                var replaced = ui.item.prev();
+                //alert('id of Item moved = ' + element_id + ' old position = ' + oldIndex + ' new position = ' + newIndex + ' parent = ' + parent);
+                reposition(element_id, newIndex, parent);
                 $(this).removeAttr('data-previndex');
             }
         });
         $("#sortable").disableSelection();
+
+        function reposition(element_id, newIndex, parent){
+            alert(element_id + ' / ' + newIndex + ' / ' + parent);
+            var request = {
+                id:         element_id,
+                position:   newIndex,
+                parent:     parent
+            }
+
+            $.ajax({
+                type: "patch",
+                url: "{{ URL::route('reposition', ['survey'=>$survey->id]) }}",
+                dataType: "json",
+                contentType: 'application/json',
+                processData: false,
+                data: JSON.stringify({"element_id": element_id, "newIndex": newIndex, "parent": parent}),
+                headers: {
+                    Authorization: 'Bearer 6U1s6E2eZ54sm5eUgZEEqzHqng1BEYkovFc96wtL'
+                },
+                success: function (msg) {
+                    //alert("New order updated");
+                    //$("#msg").html("New order updated");
+                    //$("#msg").fadeIn(2000);
+                    
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+
+        }
     </script>
 @stop
