@@ -1,4 +1,4 @@
-<div class="rounded shadow bg-light p-4 position-relative">{{--dd($element)--}}
+<div class="rounded shadow bg-light p-4 position-relative {{ $element[0]->visible === 0 ? 'hidden' : '' }} mt-5">{{--dd($element)--}}
     @if($element[0]->required == 1)
         <i class="text-danger position-absolute trquired" style="top:5px; right:10px;">required</i>
     @endif
@@ -13,14 +13,14 @@
         @endif
     @endforeach     
             <div class="row d-flex justify-content-center mt-2">
-                <div class="col-sm-{{$scaleSide}} text-end">&nbsp;<br>{{$bothOptions[0]->id}} {{$bothOptions[0]->text}} </div>
-                    @for($i = 1; $i<=$element[0]->options; $i++)
-                        <div class="col-sm-1 text-center">
+                <div class="col-{{$scaleSide}} text-end" alt="{{$bothOptions[0]->id}}">{{$bothOptions[0]->text}}</div>
+                    @for($i = 1; $i<=$scale; $i++)
+                        <div class="col-1 text-center">
                             {{$i}} 
                             <br>
-                            <input class="form-check-input" type="radio" value="{{$i}}" name="q{{$element[0]->id}}" id="q{{$element[0]->id}}_{{$i}}">
+                            <input class="form-check-input q{{$element[0]->id}}" type="radio" value="{{$i}}" name="q{{$element[0]->id}}" id="q{{$element[0]->id}}_{{$i}}">
                         </div>
                     @endfor
-                <div class="col-sm-{{$scaleSide}}">&nbsp;<br>{{$bothOptions[1]->id}} {{$bothOptions[1]->text}}</div>
+                <div class="col-{{$scaleSide}}" alt="{{$bothOptions[1]->id}} ">{{$bothOptions[1]->text}}</div>
             </div>
 </div>

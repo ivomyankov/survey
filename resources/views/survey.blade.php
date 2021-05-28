@@ -1,19 +1,114 @@
-<x-guest-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $survey->name }}  
-        </h2>
-    </x-slot>
-    
-    <div class="container p-5" style="max-width:900px">{{--dd($elements)--}}
-        <form action=" {!! route('submitSurvey',$survey->id) !!}" method="POST">
-            @csrf
-            <input type="hidden" name="required" value="{{implode(',', $required)}}">
-            @foreach($elements as $element)
-                @livewire('element-builder', ['element'=>$element])                  
-            @endforeach
+@extends('layouts.public')
 
-            <button type="submit" class="btn btn-info w-25" value="Send" >Send</button>
-        </form>
-    </div>
-</x-guest-layout>
+@section('title', 'test')
+
+@section('header')
+   hedar
+@stop
+
+@section('content') {{--dd($options)--}}
+    <form action=" {!! route('submitSurvey',$survey->id) !!}" method="POST">
+        @csrf
+        <input type="hidden" name="required" value="{{implode(',', $required)}}">
+        @if($elements)
+            @foreach($elements as $element)
+                @livewire('element-builder', ['element'=>$element, 'options'=>$options ])                  
+            @endforeach            
+            <button type="submit" class="btn btn-info w-25 mb-5" value="Send" ><< Weiter >></button>
+        @endif
+    </form>
+@stop
+
+@push('styles')
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
+
+    <style>
+        #survey-options-menu li{
+            display: block;  
+            text-align: center;
+            padding: 5px;
+        }
+
+        #survey-options-menu li i{
+            cursor: pointer;
+        }
+
+        #survey-options-menu{
+            margin: 0;
+            padding: 0;
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .hidden {
+            display:none;
+        }
+
+    </style>
+@endpush
+
+@push('scripts')
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script>        
+        $(function () {
+            'use strict'
+
+            // Make the dashboard widgets sortable Using jquery UI
+            $('.connectedSortable').sortable({
+                placeholder: 'sort-highlight',
+                connectWith: '.connectedSortable',
+                handle: '.card-header, .nav-tabs',
+                forcePlaceholderSize: true,
+                zIndex: 999999
+            });
+            $('.connectedSortable .card-header').css('cursor', 'move');
+
+        });
+/*
+        $('input[type=radio]').change(function() {
+            if (this.value == 186) {
+                if ($(this).is(':checked')) {
+                    $('#202,#205,#169,#176,#193').fadeOut();
+                }
+            } else if (this.value == 187) {
+                if ($(this).is(':checked')) {
+                    $('#202').fadeIn();
+                    $('#205,#169,#176').fadeOut();
+                }
+            }
+            if ($('#188').is(':checked')) {
+                alert(188);
+            }
+        });
+*/
+        
+
+        var data = JSON.parse('{!!json_encode($options)!!}');
+
+        $('input[type=radio]').change(function() {
+            var id = $(this).attr('id');            
+            //alert(id);
+
+            if (data.hasOwnProperty(id)) {                
+                //alert(data[id].show + ' / ' + data[id].hide);
+                if(data[id].show !== undefined){
+                    //alert(data[id].show);
+                    $(data[id].show).fadeIn();
+                }
+                if(data[id].hide !== undefined){
+                    //alert(data[id].hide);
+                    $(data[id].hide).fadeOut();
+                    //alert(data[id].hide.replace(/\#/g, '.q'));
+                    $(data[id].hide.replace(/\#/g, '.q')).prop("checked", false);
+                }
+
+            }            
+        });
+    </script>
+@endpush

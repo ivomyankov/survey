@@ -9,7 +9,7 @@ class SurveyComponent extends Component
 {
     public $elements, $survey, $text, $key, $nextPosition=1;
     public $elem_ar = [];
-    public Heading $heading;
+    //public Heading $heading;
 
     protected $listeners = [
         'changeType' => 'changeType',
@@ -20,17 +20,11 @@ class SurveyComponent extends Component
    
 
     public function render()
-    {
+    { 
         $this->elements = $this->data($this->survey);
-        //$this->arr($this->elements);
         return view('livewire.survey-component');
     }
-/*
-    public function arr($arr)
-    {
-        $this->elem_ar = $arr->toArray();
-    }
-*/
+
     public function data($survey)
     {
         $elements = Element::withTrashed()
@@ -132,7 +126,7 @@ class SurveyComponent extends Component
     public function updateOpt($id, $i)
     { 
         Element::where('id', $id)
-            ->update(['options' => $i]);
+            ->update(['opt' => '{"linear":'.$i.'}']);
 
         $this->emit('refresh');
     }

@@ -34,11 +34,27 @@ class SurveyController extends Controller
         return view('dashboard.results', ['survey' => $survey[0], 'results'=>$results, 'surveyTree'=>$surveyTree]);  
     }
 
+    public function getResultsPage(Survey $survey, FormServices $formServices)
+    {   
+        $survey = $survey->getSurveyWithElementsAndData($survey->id);
+        $surveyTree = $formServices->surveyTree($survey[0]->elements);
+        $results = $formServices->results($survey[0]->data);
+        
+        //dd($survey[0], $results, $surveyTree);
+
+        return view('results', ['survey' => $survey[0], 'results'=>$results, 'surveyTree'=>$surveyTree]);  
+    }
+
 
     public function newSurvey()
     {  
-        $data = $this->validateSurvey();
+        $data = $this->validateSurvey(); 
         $survey = Survey::create($data);
+
+        $hashSurvey = md5('survey/'.$survey->id);
+        $hashResults = md5('survey/'.$survey->id.'/results');
+
+        $survey->update(['hash_survey'=>$hashSurvey, 'hash_results'=>$hashResults ]);
 
         return redirect()->route('getSurvey', ['survey'=>$survey->id]);
     }
@@ -136,6 +152,60 @@ class SurveyController extends Controller
         ];
         
         return response()->json($data);
+    }
+
+    public function goto(Element $element, Request $request)
+    {    
+        $info = json_decode($request->getContent(), true);
+        if($info['go_to'] == 0){
+            $element->update(['go_to'=>NULL]); 
+        }else{
+            $element->update($info);          
+        }
+        $data = [
+            'success' => true,
+            'message'=> $info
+        ];
+        
+        return response()->json($data);
+    }
+
+    public function opt(Element $element, Request $request)
+    {   
+        //dd($element, json_decode($request->getContent(), true));
+        $opt_request = json_decode($request->getContent(), true);
+        $opt =  json_decode($element['opt'], true);  
+        if(array_key_exists('go_to', $opt_request)){
+            if(array_key_exists('show', $opt_request['go_to'])){
+                $opt['go_to']['show'] = $opt_request['go_to']['show'];
+            }
+            if(array_key_exists('hide', $opt_request['go_to'])){
+                $opt['go_to']['hide'] = $opt_request['go_to']['hide'];
+            }
+        }else if(array_key_exists('linear', $opt_request)){
+            $opt['linear'] = $opt_request['linear'];
+        }
+
+        $element->update(['opt'=>json_encode($opt)]); 
+
+        $data = [
+            'success' => true,
+            'message'=> $opt_request
+        ];
+        
+        return response()->json($data);
+    }
+
+    public function hashUrl($hash, FormServices $formServices){ 
+        $surveyObj = new Survey;
+        $surveys = $surveyObj->getSurveysHash(); 
+        foreach ($surveys as $key => $survey) {
+            if($survey->hash_survey == $hash){  
+                return \App::call('App\Http\Controllers\FormController@buildSurvey', ["survey" => $survey]);
+            } else if($survey->hash_results == $hash){
+                return $this->getResultsPage($survey, $formServices);
+            }
+        }
     }
 
 

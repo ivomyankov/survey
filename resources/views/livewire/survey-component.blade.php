@@ -4,13 +4,14 @@
             <div id="sortable" class="col-sm-11">
             {{--$elements--}} 
                 @foreach($elements as $element)
-                    <div id="sort_{{$element->id}}" alt="0" title="{{$element->position}}"><i class="float-left fas fa-grip-vertical"></i>
+                    <div id="sort_{{$element->id}}" class="position-relative" alt="0" title="{{$element->position}}">
+                        <i class="float-left fas fa-grip-vertical position-absolute text-secondary" style="left: -15px; top: 35%; cursor: all-scroll;"></i>
                         @if($element->type == 'h1' || $element->type == 'h2' || $element->type == 'p' || $element->type == 'b' || $element->type == 'i' )
                             @livewire('element-text', ['element_id'=>$element->id, 'text'=>$element->text, 'type'=>$element->type], key($element->id))                    
                         @elseif($element->type == 'hr')
                             <hr>
                         @elseif($element->type == 'radio' || $element->type == 'checkbox' || $element->type == 'short_text' || $element->type == 'long_text' || $element->type == 'linear_scale' || $element->type == 'multy_radio' || $element->type == 'multy_checkbox')
-                            @livewire('element-radio', ['element'=>$element], key($element->id)) 
+                            @livewire('element-radio', ['element'=>$element, 'parents'=>$elements], key($element->id)) 
                         @endif
                     </div>
                 @endforeach

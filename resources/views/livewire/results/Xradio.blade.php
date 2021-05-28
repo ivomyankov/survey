@@ -3,7 +3,7 @@
         @foreach($element as $key => $value)
             @if($key == 0)
                 <div class="col-12">
-                    <b>{{$value->text}}</b>
+                    <b>{{$value->text}} rrr</b>
                 </div>
             @else
                 <div class="col-9 col-sm-3 pt-3">

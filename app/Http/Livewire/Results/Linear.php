@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Linear extends Component
 {
-    public $results, $element, $devide, $result, $scaleSide, $bothOptions=[]; 
+    public $results, $scale, $element, $devide, $result, $scaleSide, $bothOptions=[]; 
 
     public function render()
     {
@@ -17,9 +17,13 @@ class Linear extends Component
     }
 
     public function scaleSide()
-    {
+    {   
+        $scale = json_decode($this->element[0]->opt, true);
+        $this->scale = $scale['linear'];
+        //dd($this->scale);
+            
         // intdiv - whole number deviding 5/2=2
-        $this->scaleSide = intdiv((12 - $this->element[0]->options), 2);
+        $this->scaleSide = intdiv((12 - $this->scale), 2);
     }
 
     public function bothOptions()

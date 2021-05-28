@@ -8,6 +8,7 @@ class FormServices
     public function surveyTree($raw_elements)
     { 
         $required = [];
+        $surveyTree = [];
 
         foreach($raw_elements as $key => $element){
             if($element->parent_id == 0){

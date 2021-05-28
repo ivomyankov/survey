@@ -7,7 +7,7 @@ use App\Models\Element;
 
 class ElementBuilder extends Component
 {
-    public $element; 
+    public $element, $options; 
 
     public function render()
     {

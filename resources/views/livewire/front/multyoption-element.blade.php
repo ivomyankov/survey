@@ -1,4 +1,4 @@
-<div class="rounded shadow bg-light p-4 position-relative" alt="{{$element[0]->id}}" >
+<div class="rounded shadow bg-light p-4 position-relative {{ $element[0]->visible === 0 ? 'hidden' : '' }} mt-5" alt="{{$element[0]->id}}" >
     @if($element[0]->required == 1)
         <i class="text-danger position-absolute trquired" style="top:5px; right:10px;">required</i>
     @endif
@@ -31,7 +31,7 @@
                             @endif
                         </div>
                         @for($i=1; $i<=count($rows); $i++)
-                        <div class="col-sm-2 text-center"><input class="form-check-input" type="{{$element[0]->type}}" value="{{$rows[$i-1]->id}}" name="q{{$option->id}}[]" id="q{{$option->id}}_{{$rows[$i-1]->id}}"></div>
+                        <div class="col-sm-2 text-center"><input class="form-check-input q{{$element[0]->id}}" type="{{$element[0]->type}}" value="{{$rows[$i-1]->id}}" name="q{{$option->id}}[]" id="q{{$option->id}}_{{$rows[$i-1]->id}}"></div>
                         @endfor
                     </div>
                 @endif

@@ -23,9 +23,10 @@ class SurveyStoreRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this->request);
+        //dd($this->request, $this->request->get('required'));
         $required = explode(',' ,$this->request->get('required'));
-
+        
+        //dd($this->request, $required);
         foreach($this->request as $key => $val)
         {          
             if(substr($key, -1) == 's' || substr($key, -1) == 't'){
@@ -42,14 +43,14 @@ class SurveyStoreRequest extends FormRequest
                 unset($required[$key2]);
             } 
         }
-
-        foreach ($required as $key => $value) {
-            $rules['q'.$value] = 'required';
-            unset($required[$key]);
+        if($required[0] != ''){
+            foreach ($required as $key => $value) {
+                $rules['q'.$value] = 'required';
+                unset($required[$key]);
+            }
         }
 
-        
-        //dd($rules);
+        //dd($rules);      
 
         return $rules;
 

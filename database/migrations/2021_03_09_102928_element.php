@@ -21,8 +21,10 @@ class Questions extends Migration
             $table->string('text')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->unsignedTinyInteger('position')->nullable();
+            $table->json('opt')->nullable();
+            $table->boolean('visible')->default(0);
             $table->boolean('required')->default(0);
-            $table->string('options', 1000)->nullable();
+            //$table->string('options', 1000)->nullable();
             $table->softDeletes();   
             
             //$table->foreign('survey_id')->references('id')->on('survey')->onDelete('cascade');

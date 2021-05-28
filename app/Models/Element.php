@@ -33,17 +33,16 @@ class Element extends Model
         return $elements;
     }
 
-/*
-    public function getparents($quiz_id)
+    public function getOptions($survey)
     {
-        $parents = Elements::select('parent_id')
-                        ->where('quiz_id', $quiz_id)
-                        ->orderBy('parent_id', 'ASC')
-                        ->distinct()
+        $options = Element::where('survey_id', $survey)
+                        ->whereNotNull('opt')
+                        ->orderBy('id', 'ASC')
                         ->get();
-        return $parents;
+        return $options;
     }
-*/
+
+
     public static function types()
     {
         return [

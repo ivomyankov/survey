@@ -6,7 +6,7 @@
                     <b>{{$value->text}}</b>
                 </div>
             @else
-                <div class="col-9 col-sm-3 pt-1"> 
+                <div class="col-9 col-sm-3 pt-1">
                     @if(array_key_exists($value->id, $result))
                         <div class="progress">
                             <div class="progress-bar bg-info pl-1 text-left" role="progressbar" aria-valuenow="{{round(($result[$value->id]/$devide)*100)}}" aria-valuemin="0" aria-valuemax="100" style="width: {{round(($result[$value->id]/$devide)*100)}}%">

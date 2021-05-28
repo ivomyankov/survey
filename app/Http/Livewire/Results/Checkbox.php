@@ -44,9 +44,13 @@ class Checkbox extends Component
         //dd($this->results, $this->element);
         if(array_key_exists('q'.$this->element[0]->id, $this->results)) {
             // $devide -> count of people answered this question
-            $this->devide = count($this->results['q'.$this->element[0]->id]);            
+            $this->devide = count($this->results['q'.$this->element[0]->id]);      
+            $this->result = array_count_values($this->results['q'.$this->element[0]->id]);      
+        } else {
+            $this->result = [];      
         }
-        $this->result = array_count_values($this->results['q'.$this->element[0]->id]);
+
+        
         //dd($this->result);   
     }
 }

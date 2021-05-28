@@ -27,6 +27,8 @@
                             </div>
                             <a href="{{ URL::route('getSurvey', ['survey'=>$survey->id]) }}" class="small-box-footer" style="display: inline-block; width:49%;">to survey <i class="fas fa-arrow-circle-right"></i></a>
                             <a href="{{ URL::route('getResults', ['survey'=>$survey->id]) }}" class="small-box-footer" style="display: inline-block; width:49%;">to results <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ URL::route('hashUrl', ['hash'=>$survey->hash_survey]) }}" class="small-box-footer" style="display: inline-block; width:49%;">public form <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ URL::route('hashUrl', ['hash'=>$survey->hash_results]) }}" class="small-box-footer" style="display: inline-block; width:49%;">public results <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->

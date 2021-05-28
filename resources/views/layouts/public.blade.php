@@ -5,7 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>
+            {{ config('app.name', 'Laravel') }} -
+            @yield('header')
+        </title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -13,17 +16,13 @@
         <!-- FontAwesome icons -->
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
-
         <!-- Bootstrap 5 --> 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-        <!-- Styles 
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">-->
-
         @livewireStyles
 
-        <!-- Scripts 
-        <script src="{{ mix('js/app.js') }}" defer></script>-->
+        @stack('styles')
+        
         <style>
             .input-border {
                 border: solid 2px #e0ccff;
@@ -38,24 +37,24 @@
         </style>
     </head>
     <body style="background-color: rgb(240, 235, 248);">
-    {{--dd($errors->all())--}}
+        {{--dd($errors->all())--}}
 
-    @include('messages')
+        @include('messages')
 
         <div class="min-h-screen bg-gray-100">
 
             <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    @yield('header')
+                </div>
+            </header>
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="container">
+                    @yield('content')
+                </div>
             </main>
         </div>
 

@@ -104,13 +104,8 @@
         $("#sortable").disableSelection();
 
         function reposition(element_id, newIndex, parent){
-            alert(element_id + ' / ' + newIndex + ' / ' + parent);
-            var request = {
-                id:         element_id,
-                position:   newIndex,
-                parent:     parent
-            }
-
+            //alert(element_id + ' / ' + newIndex + ' / ' + parent);
+            
             $.ajax({
                 type: "patch",
                 url: "{{ URL::route('reposition', ['survey'=>$survey->id]) }}",
@@ -134,5 +129,58 @@
             });
 
         }
+
+        $('.goto').change(function() {
+            //alert($(this).attr('id') + ' | ' + $(this).val() + "{{url('api/element/')}}/" + $(this).attr('id') + "/goto");
+            
+            $.ajax({
+                type: "patch",
+                url: "{{url('api/element/')}}/" + $(this).attr('id') + "/goto",
+                dataType: "json",
+                contentType: 'application/json',
+                processData: false,
+                data: JSON.stringify({"go_to": $(this).val() }),
+                headers: {
+                    Authorization: 'Bearer 6U1s6E2eZ54sm5eUgZEEqzHqng1BEYkovFc96wtL'
+                },
+                success: function (msg) {
+                    console.log(msg);
+                    //alert("New order updated");
+                    //$("#msg").html("New order updated");
+                    //$("#msg").fadeIn(2000);
+                    
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        });
+
+        $( ".show, .hide" ).focusout(function() {
+            if($( this ).attr('name') === 'show'){
+                var json = JSON.stringify({'go_to':{ 'show': $( this ).val() }});
+            } else if($( this ).attr('name') === 'hide'){
+                var json = JSON.stringify({'go_to':{ 'hide': $( this ).val() }});
+            }
+            $.ajax({
+                type: "patch",
+                url: "{{url('api/element/')}}/" + $(this).attr('alt') + "/opt",
+                dataType: "json",
+                contentType: 'application/json',
+                processData: false,
+                data: json,
+                headers: {
+                    Authorization: 'Bearer 6U1s6E2eZ54sm5eUgZEEqzHqng1BEYkovFc96wtL'
+                },
+                success: function (msg) {
+                    console.log(msg);                    
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        });
     </script>
 @stop

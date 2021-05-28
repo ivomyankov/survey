@@ -8,7 +8,7 @@
     <div class="row justify-content-center mt-2">
         <div class="col-6" >{{$bothOptions[0]->id}} {{$bothOptions[0]->text}}</div> 
         <div class="col-6 text-right" >{{$bothOptions[1]->id}} {{$bothOptions[1]->text}}</div>
-            @for($i = 1; $i<=$element[0]->options; $i++)
+            @for($i = 1; $i<=$scale; $i++)
                 <div class="col-1 mx-2 text-center position-relative">
                     @if(isset($result[$i]))
                     <div class="progress vertical">

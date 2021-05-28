@@ -64,6 +64,12 @@ class Survey extends Model
         return $survey;
     }
 
+    public function getSurveysHash()
+    {
+        $surveys = Survey::all();
+        return $surveys;
+    }
+
 
 /*
 

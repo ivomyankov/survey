@@ -23,4 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     //Route::get('/survey/{$survey}/results', [SurveyController::class, 'getResults'])->name('getResults');
     Route::patch('/survey/{survey}/reposition', [SurveyController::class, 'reposition'])->name('reposition');
+    //Route::patch('/element/{element}/goto', [SurveyController::class, 'goto'])->name('goto');
+    Route::patch('/element/{element}/opt', [SurveyController::class, 'opt'])->name('opt');
 //});

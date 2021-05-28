@@ -7,7 +7,7 @@ use App\Models\Element;
 
 class ElementRadio extends Component
 {
-    public $element, $types, $elements, $key=-1, $opt=[1,5];
+    public $parents, $scale, $element, $types, $elements, $key=-1, $opt = []; 
 
     protected $listeners = [
         'refresh' => '$refresh'
@@ -15,17 +15,39 @@ class ElementRadio extends Component
 
     public function mount()
     {
-        
+        $this->elements = Element::withTrashed()
+            ->where('parent_id', $this->element->id)
+            ->orderBy('position', 'ASC')
+            ->get();
+
+        $this->scale();
+        $this->types = $this->types(); 
+        $this->opt(); 
+    }
+
+    public function hydrate()
+    {
+        $this->scale();
     }
 
     public function render()
     {    
-        $this->elements = Element::withTrashed()
-                                ->where('parent_id', $this->element->id)
-                                ->orderBy('position', 'ASC')
-                                ->get();
-        $this->types = $this->types(); 
+         
         return view('livewire.element-radio');
+    }
+
+    public function scale()
+    {   
+        //dd($this->element['type']);
+        if ($this->element['type'] == 'linear_scale' && !is_null($this->element['opt']) ) {                
+            $scale = json_decode($this->element['opt'], true);
+            if (array_key_exists('linear', $scale)) {
+                $this->scale = $scale['linear'];
+            }
+        }
+        
+        
+        //dd($this->scale);
     }
 
     public function addOption($survey_id, $parent_id, $position, $type = NULL)
@@ -45,6 +67,14 @@ class ElementRadio extends Component
                 ->update(['required' => $state]);
 
         $this->element->required = $state;
+    }
+
+    public function visible($id, $state)
+    {
+        Element::Find($id)
+                ->update(['visible' => $state]);
+
+        $this->element->visible = $state;
     }
 
     public function delete($id, $action)
@@ -82,9 +112,23 @@ class ElementRadio extends Component
         }        
     }
 
-
     public function types()
     {
         return Element::types();
+    }
+
+    public function opt()
+    {
+        foreach ($this->elements as $element) {
+            if(isset($element->opt)){
+                $decode = json_decode($element->opt, true);
+                if(isset($decode['go_to']['show'])){
+                    $this->opt[$element->id]['show'] = $decode['go_to']['show'];
+                }
+                if(isset($decode['go_to']['hide'])){
+                    $this->opt[$element->id]['hide'] = $decode['go_to']['hide'];
+                }
+            }
+        }
     }
 }

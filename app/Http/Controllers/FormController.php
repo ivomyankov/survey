@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SurveyStoreRequest;
 use Illuminate\Http\Request;
 use App\Models\Survey;
+use App\Models\Element;
 use App\Models\Data;
 
 class FormController extends Controller
@@ -14,8 +15,12 @@ class FormController extends Controller
     {   
         //dd($survey->getSurveysWithElements()[$survey->id-1]);
         $survey = $survey->getSurveysWithElements()[$survey->id-1];
+        //$elementObj = new Element;
+        //$options = $elementObj->getOptions($survey->id); 
         $raw_elements = $survey->elements;
         $required = [];
+        $parents = [];
+        $options = [];
         
         //TO DO -> This part is moved to Services/FormServices. Required have to be figured out and remove most of code
         foreach($raw_elements as $key => $element){
@@ -31,6 +36,19 @@ class FormController extends Controller
         }
         
         foreach($raw_elements as $key => $element){
+            if(!is_null($element->opt) || $element->opt != ''){
+                $opt = json_decode($element->opt, true);
+                if (array_key_exists('go_to', $opt)) {
+                    if (array_key_exists('hide', $opt['go_to']) && $opt['go_to']['hide'] != '') {
+                        $options[$element->id]['hide'] = $opt['go_to']['hide'];
+                    }
+                    if (array_key_exists('show', $opt['go_to']) && $opt['go_to']['show'] != '') {
+                        $options[$element->id]['show'] = $opt['go_to']['show'];
+                    }
+                }
+                //dd($options);
+            }
+
             foreach($parents as $key2 => $value){ 
                 if($element->parent_id == $key2){                             
                     $parents[$key2][$key]=$element; 
@@ -42,10 +60,9 @@ class FormController extends Controller
         // replaces id's of parent multy_radio & checkbox with child's
         $required = $this->required($parents, $required);
     
-        //dd($raw_elements, $parents, $required);
+        //dd($raw_elements, $parents, $required, $options);
 
-        $survey = $survey->getSurveysWithElements()[0];
-        return view('survey', ['survey' => $survey, 'elements'=>$parents, 'required'=>$required]);  
+        return view('survey', ['survey' => $survey, 'elements'=>$parents, 'required'=>$required, 'options'=>$options]);  
     }
 
     public function required($parents, $required)

@@ -1,4 +1,4 @@
-<div class="row my-5">          
+<div class="row">          
     <div class="col-sm-12"> {{--dd($element)--}}
         
             @if($element[0]->type == 'h1' || $element[0]->type == 'h2' || $element[0]->type == 'b' || $element[0]->type == 'p')
@@ -6,7 +6,7 @@
             @elseif($element[0]->type == 'hr')
                 <hr>
             @elseif($element[0]->type == 'radio' || $element[0]->type == 'checkbox')
-                @livewire('front.option-element', ['element'=>$element])   
+                @livewire('front.option-element', ['element'=>$element, 'options'=>$options])   
             @elseif($element[0]->type == 'multy_radio' || $element[0]->type == 'multy_checkbox')
                 @livewire('front.multyoption-element', ['element'=>$element]) 
             @elseif($element[0]->type == 'linear_scale')

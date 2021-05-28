@@ -6,20 +6,24 @@ use Livewire\Component;
 
 class LinearscaleElement extends Component
 {
-    public $element, $scaleSide, $bothOptions=[]; 
+    public $element, $scale, $scaleSide, $bothOptions=[]; 
 
     
     public function render()
-    {
+    { 
         $this->scaleSide();
         $this->bothOptions();
         return view('livewire.front.linearscale-element');
     }
 
     public function scaleSide()
-    {
+    {   
+        $scale = json_decode($this->element[0]->opt, true);
+        $this->scale = $scale['linear'];
+        //dd($this->scale);
+            
         // intdiv - whole number deviding 5/2=2
-        $this->scaleSide = intdiv((12 - $this->element[0]->options), 2);
+        $this->scaleSide = intdiv((12 - $this->scale), 2);
     }
 
     public function bothOptions()

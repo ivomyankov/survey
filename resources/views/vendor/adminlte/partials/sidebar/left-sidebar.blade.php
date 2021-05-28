@@ -21,38 +21,26 @@
                 <li class="nav-item">
                     <a href="{{ URL::route('dashboard') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Dashboard<span class="badge badge-info right">2</span></p>
+                        <p>Dashboard<span class="badge badge-info right d-none">2</span></p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ URL::route('getSurveys') }}" class="nav-link">
                     <i class="fas fa-poll nav-icon"></i>
-                    <p>
-                    Surveys
-                        <i class="fas fa-angle-left right"></i>
-                        <span class="badge badge-info right">6</span>
-                    </p>
+                    <p>Surveys</p>
                     </a>
-                    <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        <a href="{{ URL::route('getSurveys') }}" class="nav-link">
-                        <i class="fas fa-poll nav-icon"></i>
-                        <p>Surveys</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ URL::route('newSurvey') }}" class="nav-link">
-                        <i class="fa fa-plus nav-icon"></i>
-                        <p>New survey</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/layout/boxed.html" class="nav-link">
-                        <i class="fas fa-trash nav-icon"></i>
-                        <p>Deleted</p>
-                        </a>
-                    </li>              
-                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ URL::route('newSurvey') }}" class="nav-link">
+                    <i class="fa fa-plus nav-icon"></i>
+                    <p>New survey</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="pages/layout/boxed.html" class="nav-link">
+                    <i class="fas fa-trash nav-icon"></i>
+                    <p>Deleted</p>
+                    </a>                    
                 </li>
                 {{-- Configured sidebar links
                 @ each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item') --}}

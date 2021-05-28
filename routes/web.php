@@ -28,6 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard2', function () 
 })->name('dashboard2');
 
 Route::get('/survey/{survey}', [FormController::class, 'buildSurvey'])->name('buildSurvey');
+Route::get('/h/{hash}', [SurveyController::class, 'hashUrl'])->name('hashUrl');
 
 Route::post('/survey/{survey}/submit', [FormController::class, 'submitSurvey'])->name('submitSurvey');
 
