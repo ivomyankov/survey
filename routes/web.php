@@ -23,6 +23,10 @@ Route::get('/test', function () {
     return view('test');
 });
 
+Route::get('/exit', function () {
+    return view('exit');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard2', function () {
     return view('dashboard2');
 })->name('dashboard2');

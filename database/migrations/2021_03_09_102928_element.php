@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Questions extends Migration
+class Element extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +16,10 @@ class Questions extends Migration
         Schema::create('element', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->unsignedSmallInteger('survey_id');
+            $table->unsignedBigInteger('survey_id');
             $table->string('type', 20)->default('radio');
             $table->string('text')->nullable();
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedTinyInteger('position')->nullable();
             $table->json('opt')->nullable();
             $table->boolean('visible')->default(0);

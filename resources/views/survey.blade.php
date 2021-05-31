@@ -3,20 +3,32 @@
 @section('title', 'test')
 
 @section('header')
-   hedar
+   
 @stop
 
-@section('content') {{--dd($options)--}}
-    <form action=" {!! route('submitSurvey',$survey->id) !!}" method="POST">
-        @csrf
-        <input type="hidden" name="required" value="{{implode(',', $required)}}">
-        @if($elements)
-            @foreach($elements as $element)
-                @livewire('element-builder', ['element'=>$element, 'options'=>$options ])                  
-            @endforeach            
-            <button type="submit" class="btn btn-info w-25 mb-5" value="Send" ><< Weiter >></button>
-        @endif
-    </form>
+@section('content') 
+
+    @if(session()->get('msg') == 'ok')
+        <center><h1 class="p-5 m-5 text-success"><i class="far fa-thumbs-up"></i> Thank you for your participation</h1></center>
+    @elseif(session()->get('msg') == 'error')
+        <center><h1 class="p-5 m-5 text-waring"><i class="far fa-thumbs-down"></i> Something went wrong. Please try later.</h1></center>
+    @else
+        <form class="py-5" action=" {!! route('submitSurvey',$survey->id) !!}" method="POST">
+            @csrf
+            <input type="hidden" name="required" value="{{implode(',', $required)}}">
+            <div class="d-flex justify-content-center">
+                <h1 class="display-1 text-info" >{{$survey->name}}</h1>
+            </div>
+            @if($elements)
+                @foreach($elements as $element)
+                    @livewire('element-builder', ['element'=>$element, 'options'=>$options ])                  
+                @endforeach            
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-info w-25 my-5" value="Send" ><< Weiter >></button>
+                </div>
+            @endif
+        </form>
+    @endif 
 @stop
 
 @push('styles')
@@ -24,6 +36,10 @@
   <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
 
     <style>
+        h1, h2 {
+            color: #555;
+        }
+
         #survey-options-menu li{
             display: block;  
             text-align: center;

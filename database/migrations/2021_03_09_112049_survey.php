@@ -16,8 +16,8 @@ class Survey extends Migration
         Schema::create('survey', function (Blueprint $table) {
             $table->id();
             $table->string('name' , 50)->nullable();
-            $table->string('name' , 32)->nullable();
-            $table->string('name' , 32)->nullable();
+            $table->string('hash_survey' , 32)->nullable();
+            $table->string('hash_results' , 32)->nullable();
             $table->softDeletes();
         });
     }

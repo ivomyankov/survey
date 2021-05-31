@@ -15,14 +15,14 @@ class Data extends Migration
     {
         Schema::create('data', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('survey_id');
+            $table->unsignedBigInteger('survey_id');
             $table->json('data');
             $table->string('question_id', 500);
             $table->unsignedSmallInteger('applicants_id')->nullable();
             $table->string('result', 10000);
             $table->dateTime('created_at');
 
-            //$table->foreign('elements_id')->references('id')->on('elements')->onDelete('cascade');
+            //$table->foreign('survey_id')->references('id')->on('survey');
         });
     }
 

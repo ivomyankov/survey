@@ -102,8 +102,16 @@ class FormController extends Controller
             'data'    => json_encode($validated),
         ];
         
-        
-        return Data::create( $data);
-        
+        $log = Data::create( $data); 
+        //return Data::create( $data);
+        if($log){
+            $msg = 'ok';
+        } else {
+            $msg = 'error';
+        }
+
+        return redirect()->back()->with(compact('msg'));
+        //return redirect('/exit', compact('user','identity','pallet','categories','warehouses'));  
+        //return redirect('/exit', ['msg' => $msg, 'log' => $log]);         
     }
 }
