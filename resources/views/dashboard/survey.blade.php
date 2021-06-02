@@ -42,6 +42,10 @@
             opacity: 0.4;
         }
 
+        .mobile-hidden{
+            display:none;
+        }
+
     </style>
 @stop
 

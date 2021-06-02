@@ -21,6 +21,7 @@ class ElementRadio extends Component
             ->get();
 
         $this->scale();
+        $this->getElements();
         $this->types = $this->types(); 
         $this->opt(); 
     }
@@ -34,6 +35,14 @@ class ElementRadio extends Component
     {    
          
         return view('livewire.element-radio');
+    }
+
+    public function getElements()
+    {
+        $this->elements = Element::withTrashed()
+            ->where('parent_id', $this->element->id)
+            ->orderBy('position', 'ASC')
+            ->get();
     }
 
     public function scale()
@@ -52,13 +61,14 @@ class ElementRadio extends Component
 
     public function addOption($survey_id, $parent_id, $position, $type = NULL)
     { //dd($survey_id, $parent_id, $position, $type);
-        Element::create([
+        $new_element = Element::create([
             'survey_id' => $survey_id,
             'type'      => $type,
             'text'      => NULL,
             'parent_id' => $parent_id,
             'position'  => $position
         ]);
+        $this->elements->push($new_element);
     }
 
     public function required($id, $state)
@@ -81,6 +91,7 @@ class ElementRadio extends Component
     {
         if($action == 'soft'){
             Element::Find($id)->delete();
+            
         } else if($action == 'restore'){ 
             Element::withTrashed()
                 ->where('id', $id)
@@ -90,7 +101,7 @@ class ElementRadio extends Component
                 ->where('id', $id)
                 ->forceDelete();
         }
-        
+        $this->getElements();
     }
 
     public function position($cur_pos, $new_pos)

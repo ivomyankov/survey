@@ -13,7 +13,7 @@
     @elseif(session()->get('msg') == 'error')
         <center><h1 class="p-5 m-5 text-waring"><i class="far fa-thumbs-down"></i> Something went wrong. Please try later.</h1></center>
     @else
-        <form class="py-5" action=" {!! route('submitSurvey',$survey->id) !!}" method="POST">
+        <form class="py-5" action=" {!! route('submitSurvey',$survey->id) !!}" method="POST" style="max-width: 900px; margin: auto;">
             @csrf
             <input type="hidden" name="required" value="{{implode(',', $required)}}">
             <div class="d-flex justify-content-center">
@@ -107,15 +107,20 @@
 
         var data = JSON.parse('{!!json_encode($options)!!}');
 
-        $('input[type=radio]').change(function() {
-            var id = $(this).attr('id');            
-            //alert(id);
-
+        $('input[type=radio],input[type=checkbox]').change(function() {
+            var id = $(this).val();            
+            //alert(id);            
+            
             if (data.hasOwnProperty(id)) {                
                 //alert(data[id].show + ' / ' + data[id].hide);
                 if(data[id].show !== undefined){
                     //alert(data[id].show);
-                    $(data[id].show).fadeIn();
+                    //if is checkbox and not checked then hide the the id's from hide field 
+                    if($(this).is(':checkbox') && !$(this).is(':checked')){
+                        $(data[id].show).fadeOut();
+                    } else {
+                        $(data[id].show).fadeIn();
+                    }                    
                 }
                 if(data[id].hide !== undefined){
                     //alert(data[id].hide);
@@ -124,7 +129,29 @@
                     $(data[id].hide.replace(/\#/g, '.q')).prop("checked", false);
                 }
 
-            }            
+            }    
+
         });
+
+        $('.sons').change(function() {
+            var id = $(this).attr('id');
+            if(!$(this).is(':checked') && !$(this).is(':text')){
+                $('#q'+id+'_s').val('');
+            }
+        });
+
+        $(".sonstiges").focusout(function(){
+            var id = $(this).attr('id');
+            id = id.substring(1).slice(0,-2);
+            var val = $(this).val();
+            if(val != ''){ alert('time has come');
+                $( "#"+id ).prop( "checked", true );
+            } else {
+                $( "#"+id ).prop('checked', false);
+            }
+
+        });
+
+        
     </script>
 @endpush

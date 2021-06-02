@@ -1,4 +1,4 @@
-<div class="rounded shadow bg-light p-4 position-relative {{ $element[0]->visible === 0 ? 'hidden' : '' }} mt-5">{{--dd($element)--}}
+<div class="rounded shadow bg-light p-4 position-relative {{ $element[0]->visible === 0 ? 'hidden' : '' }} mt-5" id="{{$element[0]->id}}">{{--dd($element)--}}
     @if($element[0]->required == 1)
         <i class="text-danger position-absolute trquired" style="top:5px; right:10px;">required</i>
     @endif
@@ -6,7 +6,7 @@
 
     @foreach($element as $key => $option)
         @if($key==0)
-            {{$element[0]->id}} {{$element[0]->text}}
+            {{$element[0]->text}}
             @if($element[0]->type == 'checkbox')
                 <i>(Mehrfachnennungen möglich)</i>
             @endif
