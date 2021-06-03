@@ -4,8 +4,8 @@
             <div id="sortable" class="col-sm-11">
             {{--$elements--}} 
                 @foreach($elements as $element)
-                    <div id="sort_{{$element->id}}" class="position-relative" alt="0" title="{{$element->position}}">
-                        <i class="float-left fas fa-grip-vertical position-absolute text-secondary" style="left: -15px; top: 35%; cursor: all-scroll;"></i>
+                    <div id="sort_{{$element->id}}" class="position-relative" alt="0">
+                        <i class="float-left fas fa-grip-vertical position-absolute text-secondary" style="left: -15px; top: 35%; cursor: all-scroll;" title="{{$element->position}}"></i>
                         @if($element->type == 'h1' || $element->type == 'h2' || $element->type == 'p' || $element->type == 'b' || $element->type == 'i' )
                             @livewire('element-text', ['element_id'=>$element->id, 'text'=>$element->text, 'type'=>$element->type], key($element->id))                    
                         @elseif($element->type == 'hr')
