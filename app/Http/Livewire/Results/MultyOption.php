@@ -49,7 +49,7 @@ class MultyOption extends Component
 
     public function radioResult()
     {
-        $i = -1;
+        $i = -1; dd($this->element);
         foreach ($this->element as $key => $option) {
             if($key > 0 && $option->type != 'col'){
                 // removes [] from the id. was [118]
