@@ -12,11 +12,11 @@
                 <i>(Mehrfachnennungen möglich)</i>            
             @endif
         @else    
-            <div class="form-check px-4 my-2" style="background-color: #f8f9fa;" alt="{{$option->id}} ">
+            <div class="form-check px-4 my-2" style="background-color: #f8f9fa;" alt="{{$option->id}}">
                 @if($element[0]->type == 'checkbox')
-                    <input class="form-check-input q{{$element[0]->id}} {{ $option->type === 'short_text' ? 'sons' : ''}}" type="{{$element[0]->type}}" value="{{$option->id}}" name="q{{$element[0]->id}}[]" id="{{$option->id}}">                        
+                    <input class="form-check-input q{{$element[0]->id}} {{ $option->type === 'short_text' ? 'sons' : ''}} {{ $option->opt != NULL ? 'opt' : ''}}" type="{{$element[0]->type}}" value="{{$option->id}}" name="q{{$element[0]->id}}[]" id="{{$option->id}}">                        
                 @else
-                    <input class="form-check-input q{{$element[0]->id}} {{ $option->type === 'short_text' ? 'sons' : ''}}" type="{{$element[0]->type}}" value="{{$option->id}}" name="q{{$element[0]->id}}" id="{{$option->id}}">
+                    <input class="form-check-input q{{$element[0]->id}} {{ $option->type === 'short_text' ? 'sons' : ''}} {{ $option->opt != NULL ? 'opt' : ''}}" type="{{$element[0]->type}}" value="{{$option->id}}" name="q{{$element[0]->id}}" id="{{$option->id}}">
                         
                 @endif 
                 <label class="form-check-label w-100" for="q{{$element[0]->id}}_{{$option->position}}">                    

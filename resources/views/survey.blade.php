@@ -107,7 +107,7 @@
 
         var data = JSON.parse('{!!json_encode($options)!!}');
 
-        $('input[type=radio],input[type=checkbox]').change(function() {
+        $('.opt').change(function() {
             var id = $(this).val();            
             //alert(id);            
             
