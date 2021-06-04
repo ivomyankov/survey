@@ -18,7 +18,7 @@
                         <div class="col-1 text-center">
                             {{$i}} 
                             <br>
-                            <input class="form-check-input q{{$element[0]->id}}" type="radio" value="{{$i}}" name="q{{$element[0]->id}}" id="q{{$element[0]->id}}_{{$i}}">
+                            <input class="form-check-input q{{$element[0]->id}}" type="radio" value="{{$i}}" name="q{{$element[0]->id}}" >
                         </div>
                     @endfor
                 <div class="col-{{$scaleSide}}" alt="{{$bothOptions[1]->id}} ">{{$bothOptions[1]->text}}</div>
