@@ -11,7 +11,7 @@
                         @elseif($element->type == 'hr')
                             <hr>
                         @elseif($element->type == 'radio' || $element->type == 'checkbox' || $element->type == 'short_text' || $element->type == 'long_text' || $element->type == 'linear_scale' || $element->type == 'multy_radio' || $element->type == 'multy_checkbox')
-                            @livewire('element-radio', ['element'=>$element, 'parents'=>$elements], key($element->id)) 
+                            @livewire('element-questions', ['element'=>$element, 'parents'=>$elements], key($element->id)) 
                         @endif
                     </div>
                 @endforeach

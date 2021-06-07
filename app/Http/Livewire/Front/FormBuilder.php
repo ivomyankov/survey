@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Front;
 
 use Livewire\Component;
 use App\Models\Element;
 
-class ElementBuilder extends Component
+class FormBuilder extends Component
 {
     public $element, $options; 
 
     public function render()
     {
-        return view('livewire.element-builder');
+        return view('livewire.front.form-builder');
     }
 }

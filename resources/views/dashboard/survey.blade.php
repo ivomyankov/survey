@@ -13,7 +13,7 @@
 @section('content')
     {{--dd($survey)--}}
 
-    @livewire('survey-component', ['survey'=>$survey->id])            
+    @livewire('survey-builder', ['survey'=>$survey->id])            
       
 @stop
 

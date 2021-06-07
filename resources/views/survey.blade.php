@@ -21,7 +21,7 @@
             </div>
             @if($elements)
                 @foreach($elements as $element)
-                    @livewire('element-builder', ['element'=>$element, 'options'=>$options ])                  
+                    @livewire('front.form-builder', ['element'=>$element, 'options'=>$options ])                  
                 @endforeach            
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-info w-25 my-5" value="Send" ><< Weiter >></button>

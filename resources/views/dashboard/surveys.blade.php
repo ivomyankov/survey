@@ -14,7 +14,7 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 @foreach($surveys as $survey)
-                    <div class="col-lg-3 col-6">
+                    <div class="col-12 col-sm-6 col-md-4">
                         <!-- small box -->
                         <div class="small-box bg-{{$colors[array_rand($colors, 1)]}}">
                             <div class="inner">

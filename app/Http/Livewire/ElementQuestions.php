@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Element;
 
-class ElementRadio extends Component
+class ElementQuestions extends Component
 {
     public $parents, $scale, $element, $types, $elements, $key=-1, $opt = []; 
 
@@ -34,7 +34,7 @@ class ElementRadio extends Component
     public function render()
     {    
          
-        return view('livewire.element-radio');
+        return view('livewire.element-questions');
     }
 
     public function getElements()

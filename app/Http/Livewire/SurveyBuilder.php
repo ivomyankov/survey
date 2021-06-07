@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Element;
 
-class SurveyComponent extends Component
+class SurveyBuilder extends Component
 {
     public $elements, $survey, $text, $key, $nextPosition=1;
     public $elem_ar = [];
@@ -22,7 +22,7 @@ class SurveyComponent extends Component
     public function render()
     { 
         $this->elements = $this->data($this->survey);
-        return view('livewire.survey-component');
+        return view('livewire.survey-builder');
     }
 
     public function data($survey)

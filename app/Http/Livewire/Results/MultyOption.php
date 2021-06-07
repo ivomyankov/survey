@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Results;
 
+// We receive $results and $element. Then spliting the element to question and it's options.
+
 use Livewire\Component;
 
 class MultyOption extends Component
@@ -24,18 +26,20 @@ class MultyOption extends Component
     {
         $i = -1;
         foreach ($this->element as $key => $option) {
-            if($key > 0 && $option->type != 'col'){                 
-                $this->result[$option->id] = implode(',', $this->results['q'.$option->id]);
-                // removes [ ]
-                $this->result[$option->id] = str_replace(array( '[', ']', ' ' ), '', $this->result[$option->id]);
-                //  makes string to array 125, 216, 123
-                $this->result[$option->id] = explode(',', $this->result[$option->id]);
-                // counts the values in the array
-                $this->result[$option->id] = array_count_values($this->result[$option->id]);
-                // removes [] from the id. was [118]
-                //$this->results['q'.$option->id] = preg_replace("/[^a-zA-Z 0-9]+/", "", $this->results['q'.$option->id] );
-                // counts the answered options and adds to new array
-                //$this->result[$option->id] = array_count_values($this->results['q'.$option->id]);
+            if($key > 0 && $option->type != 'col'){      
+                if(array_key_exists('q'.$option->id, $this->results)) {           
+                    $this->result[$option->id] = implode(',', $this->results['q'.$option->id]);
+                    // removes [ ]
+                    $this->result[$option->id] = str_replace(array( '[', ']', ' ' ), '', $this->result[$option->id]);
+                    //  makes string to array 125, 216, 123
+                    $this->result[$option->id] = explode(',', $this->result[$option->id]);
+                    // counts the values in the array
+                    $this->result[$option->id] = array_count_values($this->result[$option->id]);
+                    // removes [] from the id. was [118]
+                    //$this->results['q'.$option->id] = preg_replace("/[^a-zA-Z 0-9]+/", "", $this->results['q'.$option->id] );
+                    // counts the answered options and adds to new array
+                    //$this->result[$option->id] = array_count_values($this->results['q'.$option->id]);
+                }
             } elseif($key > 0 && $option->type == 'col'){
                 $i++;
                 array_push($this->cols, [$option->id, $option->text, $this->colors[$i] ]);
@@ -49,13 +53,15 @@ class MultyOption extends Component
 
     public function radioResult()
     {
-        $i = -1; dd($this->element);
+        $i = -1; //dd($this->element);
         foreach ($this->element as $key => $option) {
             if($key > 0 && $option->type != 'col'){
                 // removes [] from the id. was [118]
-                $this->results['q'.$option->id] = preg_replace("/[^a-zA-Z 0-9]+/", "", $this->results['q'.$option->id] );
-                // counts the answered options and adds to new array
-                $this->result[$option->id] = array_count_values($this->results['q'.$option->id]);
+                if(array_key_exists('q'.$option->id, $this->results)) {
+                    $this->results['q'.$option->id] = preg_replace("/[^a-zA-Z 0-9]+/", "", $this->results['q'.$option->id] );
+                    // counts the answered options and adds to new array
+                    $this->result[$option->id] = array_count_values($this->results['q'.$option->id]);
+                }
             } elseif($key > 0 && $option->type == 'col'){
                 $i++;
                 array_push($this->cols, [$option->id, $option->text, $this->colors[$i] ]);
