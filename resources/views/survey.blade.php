@@ -17,7 +17,7 @@
             @csrf
             <input type="hidden" name="required" value="{{implode(',', $required)}}">
             <div class="d-flex justify-content-center">
-                <h1 class="display-1 text-info" >{{$survey->name}}</h1>
+                <h1 class="display-1 text-info d-none" >{{$survey->name}}</h1>
             </div>
             @if($elements)
                 @foreach($elements as $element)

@@ -6,7 +6,7 @@
 
     @foreach($element as $key => $option)
         @if($key==0)
-             {{$element[0]->text}} 
+            <b>{{$element[0]->text}}</b>
             
             @if($element[0]->type == 'checkbox')
                 <i>(Mehrfachnennungen möglich)</i>            

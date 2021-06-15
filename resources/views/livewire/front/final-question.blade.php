@@ -4,7 +4,7 @@
         <i class="text-danger position-absolute trquired" style="top:5px; right:10px;">required</i>
     @endif
     
-    {{$element[0]->text}}  
+    <b>{{$element[0]->text}}</b>
     <div class="form-check px-0 my-2" style="background-color: #f8f9fa;" >
         <div class="col-12 pb-3">
             <input class="form-input q{{$element[0]->id}} input-border last" min="0" max="100" value="0" name="q{{$element[1]->id}}" id="{{$element[1]->id}}" style="width:50px" type="number" >
