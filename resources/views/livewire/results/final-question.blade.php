@@ -4,7 +4,7 @@
             <b>{{$element[0]->text}}</b>
         </div>            
         <div class="col-12 pb-3">
-            <b>{{ $options[1] ?? 0 }}%</b> auf PKW , <b>{{$options[2] ?? 0 }}%</b> auf Kleintransporter und Transporter bis 3,5 Tonnen, <b>{{$options[3] ?? 0 }}%</b> Sonstige           
+            <b class="bg-info">{{ $options[1] ?? 0 }}%</b> auf PKW , <b class="bg-info">{{$options[2] ?? 0 }}%</b> auf Kleintransporter und Transporter bis 3,5 Tonnen, <b class="bg-info">{{$options[3] ?? 0 }}%</b> Sonstige           
         </div>
     </div>
 </div>
