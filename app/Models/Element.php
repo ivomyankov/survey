@@ -55,7 +55,8 @@ class Element extends Model
             'multy_radio',
             'linear_scale',
             'date',
-            'time'
+            'time',
+            'final_question'
         ];
     }
 

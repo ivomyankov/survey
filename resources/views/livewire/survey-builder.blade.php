@@ -10,7 +10,7 @@
                             @livewire('element-text', ['element_id'=>$element->id, 'text'=>$element->text, 'type'=>$element->type], key($element->id))                    
                         @elseif($element->type == 'hr')
                             <hr>
-                        @elseif($element->type == 'radio' || $element->type == 'checkbox' || $element->type == 'short_text' || $element->type == 'long_text' || $element->type == 'linear_scale' || $element->type == 'multy_radio' || $element->type == 'multy_checkbox')
+                        @elseif($element->type == 'radio' || $element->type == 'checkbox' || $element->type == 'short_text' || $element->type == 'long_text' || $element->type == 'linear_scale' || $element->type == 'multy_radio' || $element->type == 'multy_checkbox' || $element->type == 'final_question')
                             @livewire('element-questions', ['element'=>$element, 'parents'=>$elements], key($element->id)) 
                         @endif
                     </div>
@@ -24,7 +24,7 @@
                         <li><i wire:click="addBold" title="Add bold text" class="fas fa-bold fa-2x"></i></li>
                         <li><i wire:click="addItalic" title="Add italic text" class="fas fa-italic fa-2x"></i></li>
                         <li><i wire:click="addParagraph" title="Add paragrap" class="fas fa-paragraph fa-2x"></i></li>
-                        <li><i wire:click="" class="fas fa-grip-lines fa-2x"></i></li>
+                        <li><i wire:click="addFinalQuestions" class="fas fa-grip-lines fa-2x"></i></li>
                         <li><i wire:click="addSeparator" title="Add separator" class="fas fa-minus fa-2x"></i></li>
                         <li><i class="fas fa-slash fa-2x"></i></li>
                         <li><i class="fas fa-image fa-2x"></i></li>

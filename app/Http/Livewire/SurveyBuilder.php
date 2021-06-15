@@ -113,15 +113,75 @@ class SurveyBuilder extends Component
             ->update(['text' => $propertyText]);
  
     }
-
+/*
     public function changeType($id, $type)
     {       
+        $toUpdate = [];
+
+        if ($type == 'final_question'){
+            $toUpdate = [
+                    'type' => $type,
+                    'text' => 'Davon entfallen'
+                ]; 
+        } else {
+            $toUpdate = ['type' => $type]; 
+        }
         Element::where('id', $id)
-            ->update(['type' => $type]); 
+                ->update($toUpdate); 
+
+        $this->emit('refresh');
+    }
+*/
+    public function changeType($id, $type)
+    {       
+        if ($type == 'final_question'){
+            $this->finalQuestion($id, $type);
+        } else {
+            Element::where('id', $id)
+                ->update(['type' => $type]);
+        }
 
         $this->emit('refresh');
     }
 
+    public function finalQuestion($id, $type)
+    {
+        Element::where('id', $id)
+                ->update([
+                    'type' => $type,
+                    'text' => 'Davon entfallen'
+                ]);
+
+        $child = Element::where('parent_id', $id)
+                ->get();
+        
+        if ( $child->isEmpty()){
+            $final = Element::find($id);
+
+            Element::insert([
+                [
+                    'survey_id' => $final->survey_id,
+                    'parent_id' => $id,
+                    'type'      => NULL,
+                    'position'  => 1
+                ],
+                [
+                    'survey_id' => $final->survey_id,
+                    'parent_id' => $id,
+                    'type'      => NULL,
+                    'position'  => 2
+                ],
+                [
+                    'survey_id' => $final->survey_id,
+                    'parent_id' => $id,
+                    'type'      => NULL,
+                    'position'  => 3
+                ]
+            ]);
+        } 
+        
+        return;
+    }
 
     public function updateOpt($id, $i)
     { 

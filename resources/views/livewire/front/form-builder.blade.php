@@ -12,7 +12,9 @@
             @elseif($element[0]->type == 'linear_scale')
                 @livewire('front.linearscale-element', ['element'=>$element])   
             @elseif($element[0]->type == 'short_text' || $element[0]->type == 'long_text')
-                @livewire('front.text-element', ['element'=>$element])   
+                @livewire('front.text-element', ['element'=>$element])     
+            @elseif($element[0]->type == 'final_question')
+                @livewire('front.final-question', ['element'=>$element])   
             @endif
 
         

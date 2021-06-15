@@ -274,6 +274,29 @@
                 </div>
             </div>
         </div>
+        @elseif($element->type == "final_question")
+        <div class="card-body @if($element->trashed()) disabled @endif row">
+            <div class="col-12 pb-3">
+                <input size="3" type="text" placeholder="" >
+                % auf PKW , 
+                <input size="3" type="text" placeholder="" >
+                % auf Kleintransporter und Transporter bis 3,5 Tonnen, 
+                <input size="3" type="text" placeholder="" >
+                % Sonstige
+            </div>
+            <div class="col-12 text-right">
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{$element->type}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach($types as $type)
+                            <a type="button" class="dropdown-item" wire:click="$emit('changeType', {{$element->id}}, '{{$type}}')" >{{$type}}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
         @endif
         <div class="card-footer text-muted text-right">
            

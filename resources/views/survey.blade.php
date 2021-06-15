@@ -9,9 +9,9 @@
 @section('content') 
 
     @if(session()->get('msg') == 'ok')
-        <center><h1 class="p-5 m-5 text-success"><i class="far fa-thumbs-up"></i> Thank you for your participation</h1></center>
+        <center><h1 class="p-5 m-5 text-success"><i class="far fa-thumbs-up"></i>Vielen Dank für Ihre Teilnahme</h1></center>
     @elseif(session()->get('msg') == 'error')
-        <center><h1 class="p-5 m-5 text-waring"><i class="far fa-thumbs-down"></i> Something went wrong. Please try later.</h1></center>
+        <center><h1 class="p-5 m-5 text-waring"><i class="far fa-thumbs-down"></i>Versuchen Sie bitte später noch mal</h1></center>
     @else
         <form class="py-5" action=" {!! route('submitSurvey',$survey->id) !!}" method="POST" style="max-width: 900px; margin: auto;">
             @csrf
@@ -71,7 +71,35 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script>        
+    <script>    
+        $("form").submit(function(){
+            if(check() != true){
+                return false;
+            }
+        });
+
+        function check() {            
+            // if any checks required
+            try {            
+                var sum = 0;
+                $('.last').each(function () {
+                    sum += Number($(this).val());
+                });
+                if (sum != 100) {
+                    $("#last").text('X1 + X2 + X3 = ' + sum + ' !');
+                    throw 'Bitte korrigieren Sie Ihre Eingabe.';
+                }            
+                return true;
+                //alert('send');
+
+            } // /try
+            catch(err) {
+                alert(err);
+                return false;
+            }
+
+        } // / check()
+
         $(function () {
             'use strict'
 
@@ -144,7 +172,7 @@
             var id = $(this).attr('id');
             id = id.substring(1).slice(0,-2);
             var val = $(this).val();
-            if(val != ''){ alert('time has come');
+            if(val != ''){ 
                 $( "#"+id ).prop( "checked", true );
             } else {
                 $( "#"+id ).prop('checked', false);
