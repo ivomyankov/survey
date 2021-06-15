@@ -9,7 +9,7 @@
                         <div class="row d-flex justify-content-center">
                             @foreach($cols as $index => $col)                            
                                 <div class="col-2 mx-2 mb-2" >
-                                    <div class="row d-flex justify-content-center">{{$col[0]}} {{$col[1]}}</div>
+                                    <div class="row d-flex justify-content-center" title="{{$col[0]}}">{{$col[1]}} </div>
                                     <div class="row bg-{{$col[2]}} p-1"></div>
                                 </div>     
                             @endforeach
@@ -17,8 +17,8 @@
                     </div>
             @elseif($value->type != 'col')        
                 @if($element[0]->type == 'multy_radio')
-                    <div class="col-sm-6">
-                        <b>{{$value->id}} {{$value->text}}</b>
+                    <div class="col-sm-6" title="{{$value->id}}">
+                        <b>{{$value->text}}</b>
                         <ul>
                             @if($value->type == 'short_text' && array_key_exists('q'.$value->id.'_s', $results))
                                 @foreach($results['q'.$value->id.'_s'] as $res)
@@ -69,7 +69,7 @@
                                 @endif
                             @endforeach
                         </div>
-                        <div class="col-sm-8 my-2"> {{$value->id}} {{$value->text}} 
+                        <div class="col-sm-8 my-2" title="{{$value->id}}">{{$value->text}} 
                             @if($value->type == 'short_text' && array_key_exists('q'.$value->id.'_s', $results))
                                 Sonstiges:
                                 <ul>
@@ -95,8 +95,8 @@
                                     @endif
                                 @endforeach                            
                             </div>
-                            <div class="row">
-                                {{$value->id}} {{$value->text}} 
+                            <div class="row" title="{{$value->id}}">
+                                {{$value->text}} 
                                 @if($value->type == 'short_text' && array_key_exists('q'.$value->id.'_s', $results))
                                     Sonstiges:
                                     <ul>

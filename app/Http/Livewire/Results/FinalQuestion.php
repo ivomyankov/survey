@@ -25,7 +25,7 @@ class FinalQuestion extends Component
         
         foreach ($this->element as $key => $elem) {
             if ( $key > 0 && array_key_exists('q'.$elem->id, $this->results ) ) {
-                $this->options[$key] = array_sum($this->results['q'.$elem->id])/count($this->results['q'.$elem->id]);
+                $this->options[$key] = round(array_sum($this->results['q'.$elem->id])/count($this->results['q'.$elem->id]), 1);
             }
         }
 

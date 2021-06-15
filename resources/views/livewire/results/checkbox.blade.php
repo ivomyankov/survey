@@ -26,11 +26,11 @@
                         0%
                     @endif
                 </div>
-                <div class="col-sm-8">{{$value->id}} 
+                <div class="col-sm-8" title="{{$value->id}}">
                     @if($value->type == 'short_text' && isset($results['q'.$value->id.'_s']))
                         Sonstiges:
                     @else    
-                        {{$value->text}}
+                        {{$value->text}} 
                     @endif
                 </div>
                 @if($value->type == 'short_text' && isset($results['q'.$value->id.'_s']))
