@@ -73,7 +73,7 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script>    
         $("form").submit(function(){
-            if ( $("#last" ).length == 0 ) {
+            if ( $("#last" ).length > 0 ) {
                 if ( check() != true ){
                     return false;
                 }
