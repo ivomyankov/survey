@@ -73,8 +73,10 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script>    
         $("form").submit(function(){
-            if(check() != true){
-                return false;
+            if ( $("#last" ).length == 0 ) {
+                if ( check() != true ){
+                    return false;
+                }
             }
         });
 
@@ -86,7 +88,7 @@
                     sum += Number($(this).val());
                 });
                 if (sum != 100) {
-                    $("#last").text('X1 + X2 + X3 = ' + sum + ' !');
+                    $("#last").text('X1 + X2 + X3 = ' + sum + ' %');
                     throw 'Bitte korrigieren Sie Ihre Eingabe.';
                 }            
                 return true;
