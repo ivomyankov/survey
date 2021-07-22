@@ -25,4 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::patch('/survey/{survey}/reposition', [SurveyController::class, 'reposition'])->name('reposition');
     //Route::patch('/element/{element}/goto', [SurveyController::class, 'goto'])->name('goto');
     Route::patch('/element/{element}/opt', [SurveyController::class, 'opt'])->name('opt');
+    Route::patch('/element/{element}/test', [SurveyController::class, 'test'])->name('test');
 //});

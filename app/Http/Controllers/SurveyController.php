@@ -217,5 +217,27 @@ class SurveyController extends Controller
         ]);
     }
 
+    public function test(Element $element, Request $request)
+    {    
+        $info = json_decode($request->getContent(), true);
+        if($info['go_to'] == 0){
+            //$element->update(['go_to'=>NULL]); 
+            $info['go_to'] = 'NULL';
+        }
+        if($element->update($info)){
+            $success = true;
+        } else {
+            $success = false;
+        }
+
+        $data = [
+            'success'   =>  $success,
+            'message'   =>  $info,
+            'element'   =>  $element
+        ];
+        
+        return response()->json($data);
+    }
+
     
 }
