@@ -174,7 +174,7 @@
                     xhr.setRequestHeader('Authorization', 'Bearer 6U1s6E2eZ54sm5eUgZEEqzHqng1BEYkovFc96wtL');
                 },
                 async: true,
-                //crossDomain: true,
+                crossDomain: true,
                 success: function (response) {
                 console.log(response);
                 //alert("Details saved successfully!!!");
