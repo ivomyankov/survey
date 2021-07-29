@@ -37,7 +37,7 @@
             </div>
             
         </div>
-        @if($element->type == "radio" || $element->type == 'checkbox' || $element->type == 'linear_scale')
+        @if($element->type == 'radio' || $element->type == 'checkbox' || $element->type == 'linear_scale')
         <div class="card-body @if($element->trashed()) disabled @endif">
             @if($element->type == 'linear_scale')
             <div class="row mb-4">
@@ -68,6 +68,78 @@
                                 @endif
                             </div>
                             <div class="col-7 pt-1" @if ($elem->trashed())  style="pointer-events: none; opacity: 0.5; background: #CCC;"  @endif >                                                        
+                                @if($elem->type == 'short_text' || $elem->type == 'long_text')
+                                    Other...
+                                @else                            
+                                    @livewire('element-text', ['element_id'=>$elem->id, 'text'=>$elem->text, 'type'=>$elem->type], key($elem->id))
+                                @endif
+                            </div>
+                            <div class="col-4 ">
+                                <div class="row w-100">
+                                    <div class="col-8">
+                                        <div>
+                                            <i type="button" onclick="$( '#h{{$elem->id}}' ).toggle()" title="Invisible" class="fas fa-eye-slash"></i>
+                                            <input id="h{{$elem->id}}" class="hide w-75" alt="{{$elem->id}}" type="text" name="hide" placeholder="hide" style="display:none;" value="{{$opt[$elem->id]['hide'] ?? ''}}">
+                                        </div>
+                                        <div>
+                                            <i type="button" onclick="$( '#s{{$elem->id}}' ).toggle()" title="Visible" class="fas fa-eye"></i>
+                                            <input id="s{{$elem->id}}" class="hide w-75" alt="{{$elem->id}}" type="text" name="show" placeholder="show" style="display:none;" value="{{$opt[$elem->id]['show'] ?? ''}}">
+                                        </div>
+                                        
+                                    </div>
+                                    @if ($elem->trashed())  
+                                    <div class="col-1 position-relative"><i wire:click="delete({{$elem->id}}, 'restore')" title="restore" class="position-absolute fas fa-trash-restore"></i></div>
+                                    <div class="col-1 position-relative"><i wire:click="delete({{$elem->id}}, 'destroy')" title="delete" class="position-absolute fas fa-trash"></i></div>
+                                    @else
+                                    <div class="col-2 position-relative text-right"><i wire:click="delete({{$elem->id}}, 'soft')" title="disable" class="position-absolute fas fa-times"></i></div>
+                                    @endif                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+                <li>
+                    <div class="row">
+                        <div class="col-8">
+                            <span type="button" class="text-primary" wire:click="addOption({{$element->survey_id}},{{$element->id}}, {{$key+2}})" title="Add option"><i class="far fa-plus-square"></i> New option</span>
+                            &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp;
+                            <a type="button" class="text-primary" wire:click="addOption({{$element->survey_id}},{{$element->id}}, {{$key+2}}, 'short_text')" title="Free text" >Other...</a>
+                        </div>
+                        <div class="col-4 text-right">
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{$element->type}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach($types as $type)
+                                        <a type="button" class="dropdown-item" wire:click="$emit('changeType', {{$element->id}}, '{{$type}}')" >{{$type}}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </li>
+                
+            </ul>
+        </div>
+        @elseif($element->type == 'percentage')
+        <div class="card-body @if($element->trashed()) disabled @endif">
+            <ul id="sortable" class="list-unstyled mx-2">
+                @foreach($elements as $key => $elem) 
+                    <li id="sub_{{$elem->id}}" alt="{{$element->id}}">
+                        <div class="row shadow my-3">
+                            <div class="col-1 p-1">
+                                {{--$elem->id--}} 
+                                @if($element->type == 'radio')  
+                                    <i class="far fa-circle" title="{{$elem->id}}" ></i>
+                                @elseif($element->type == 'checkbox')  
+                                    <i class="far fa-square" title="{{$elem->id}}"></i>
+                                @endif
+                            </div>
+                            <div class="col-8 pt-1" @if ($elem->trashed())  style="pointer-events: none; opacity: 0.5; background: #CCC;"  @endif >                                                        
                                 @if($elem->type == 'short_text' || $elem->type == 'long_text')
                                     Other...
                                 @else                            

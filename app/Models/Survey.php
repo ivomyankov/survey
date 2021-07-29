@@ -70,6 +70,18 @@ class Survey extends Model
         return $surveys;
     }
 
+    public function getSurveysIdByHash($hash)
+    {
+        $survey = Survey::where(function ($query) use ($hash) {
+                    $query->where('hash_survey', '=', $hash)
+                        ->orWhere('hash_results', '=', $hash)
+                        ->orWhere('hash_submit', '=', $hash);
+                })
+                ->get();
+
+        return $survey;
+    }
+
 
 /*
 

@@ -46,6 +46,8 @@
                                     @livewire('results.linear', ['element'=>$element, 'results'=>$results])
                                 @elseif($element[0]->type == 'short_text' || $element[0]->type == 'long_text')
                                     @livewire('results.text', ['element'=>$element, 'results'=>$results])
+                                @elseif($element[0]->type == 'percentage')
+                                    @livewire('results.percentage-element', ['element'=>$element, 'results'=>$results])
                                 @elseif($element[0]->type == 'final_question')
                                     @livewire('results.final-question', ['element'=>$element, 'results'=>$results])
                                 @endif

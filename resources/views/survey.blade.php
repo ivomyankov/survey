@@ -7,14 +7,15 @@
 @stop
 
 @section('content') 
+    <center><h1 class="p-5 m-5 text-success" style="display:none;"><i class="far fa-thumbs-up"></i>Vielen Dank für Ihre Teilnahme</h1></center>
+    <center><h1 class="p-5 m-5 text-waring" style="display:none;"><i class="far fa-thumbs-down"></i>Versuchen Sie bitte später noch mal</h1></center>
 
     @if(session()->get('msg') == 'ok')
         <center><h1 class="p-5 m-5 text-success"><i class="far fa-thumbs-up"></i>Vielen Dank für Ihre Teilnahme</h1></center>
     @elseif(session()->get('msg') == 'error')
         <center><h1 class="p-5 m-5 text-waring"><i class="far fa-thumbs-down"></i>Versuchen Sie bitte später noch mal</h1></center>
     @else
-        <form class="py-5" action=" {!! route('submitSurvey',$survey->id) !!}" method="POST" style="max-width: 900px; margin: auto;">
-            @csrf
+        <form id=form class="py-5" action="{{-- route('submitSurvey',$survey->id) --}}" method="POST" style="max-width: 900px; margin: auto;">
             <input type="hidden" name="required" value="{{implode(',', $required)}}">
             <div class="d-flex justify-content-center">
                 <h1 class="display-1 text-info d-none" >{{$survey->name}}</h1>
@@ -24,7 +25,7 @@
                     @livewire('front.form-builder', ['element'=>$element, 'options'=>$options ])                  
                 @endforeach            
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-info w-25 my-5" value="Send" ><< Weiter >></button>
+                    <button type="button" onclick="submt()" class="btn btn-info w-25 my-5" value="Send" ><< Weiter >></button>
                 </div>
             @endif
         </form>
@@ -64,6 +65,15 @@
             display:none;
         }
 
+        .errorBorder {
+            border: solid 2px red;
+        }
+
+        .error {
+            color:#f00; 
+            font-size:12px;
+        }
+
     </style>
 @endpush
 
@@ -72,27 +82,37 @@
     <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script>    
-        $("form").submit(function(){
-            if ( $("#last" ).length > 0 ) {
-                if ( check() != true ){
+        function submt(){
+            $( ".rounded" ).removeClass( "errorBorder" );
+            $( ".error" ).text( '' );
+
+            /*if ( $(".last" ).length > 0 ) {
+                if ( check('last') != true ){
                     return false;
                 }
-            }
-        });
+            } */
 
-        function check() {            
-            // if any checks required
+            $( ".percentage, .last" ).each(function() {
+                checkSum( $(this).attr('id') );
+            });                        
+        };
+
+        function checkSum(id) {     
             try {            
                 var sum = 0;
-                $('.last').each(function () {
+                var elements = '';
+                $('#' + id +' :input').each(function (index) {
                     sum += Number($(this).val());
+                    elements = elements + ' + X' + (index+1);
                 });
                 if (sum != 100) {
-                    $("#last").text('X1 + X2 + X3 = ' + sum + ' %');
+                    $( "#"+id ).addClass( "errorBorder" );
+                    $(".error").text(elements.substring(3) + ' = ' + sum + '% < 100%');
                     throw 'Bitte korrigieren Sie Ihre Eingabe.';
+                    
                 }            
-                return true;
-                //alert('send');
+                //alert('send after check');
+                send();
 
             } // /try
             catch(err) {
@@ -101,6 +121,96 @@
             }
 
         } // / check()
+/*
+        function check() {     
+            try {            
+                var sum = 0;
+                $('.last').each(function () {
+                    sum += Number($(this).val());
+                });
+                if (sum != 100) {
+                    $( ".last" ).addClass( "errorBorder" );
+                    $("#last").text('X1 + X2 + X3 = ' + sum + ' %');
+                    throw 'Bitte korrigieren Sie Ihre Eingabe.';
+                }            
+                //return true;
+                //alert('send');
+                send();
+
+            } // /try
+            catch(err) {
+                alert(err);
+                return false;
+            }
+
+        } // / check()
+*/
+
+        function send(){ 
+            var data = {};
+            let formData = new FormData(document.getElementById('form'));
+
+            formData.forEach((value, key) => {
+                // Reflect.has in favor of: object.hasOwnProperty(key)
+                if(!Reflect.has(data, key)){
+                    data[key] = value;
+                    return;
+                }
+                if(!Array.isArray(data[key])){
+                    data[key] = [data[key]];    
+                }
+                data[key].push(value);
+            });
+            var json = JSON.stringify(data).replace('[]',''); //on stringified var we remove '[]' from keys => 'q90[]' to 'q90'
+            console.log(json, 'zzz');
+
+            $.ajax({
+                url: "http://127.0.0.1:8000/api/h/{{$survey->hash_submit}}",
+                method: "post",    
+                dataType: "json",
+                data: json,
+                contentType: "application/json",    
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer 6U1s6E2eZ54sm5eUgZEEqzHqng1BEYkovFc96wtL');
+                },
+                async: true,
+                //crossDomain: true,
+                success: function (response) {
+                console.log(response);
+                //alert("Details saved successfully!!!");
+                },
+                error: function (xhr, status, error) {
+                    alert(/*xhr+", "+xhr.status+", "+status+", "+error+"," +*/xhr.responseText);
+                    getErrors(xhr.responseText);
+                }
+            })
+            .done(function (data) {
+            if(data.success){
+                console.log("Thank you");
+                $('.text-success').show();
+                $(form).hide();
+            }
+            })
+            .fail(function () {
+                //alert("no good");
+            });
+        }
+
+
+        function getErrors(responseText) {
+            var err = JSON.parse(responseText);
+            var mark = [];
+            $.each(err.errors, function(name, val) {
+                if (val == 'The '+ name +' field is required.'){
+                    mark[name]=val;
+                    //alert(mark[name]);
+                    var id = name.substr(1);
+                    $( "#"+id ).addClass( "errorBorder" );
+                }                
+                //alert(name + ' / ' + val);
+            });
+            console.log("Mark: ", mark);
+        }
 
         $(function () {
             'use strict'
@@ -181,6 +291,24 @@
             }
 
         });
+
+        function processAjaxRequest(type, formData, formUrl){
+            if (type == '' || formData == '' || formUrl == ''){
+                return false;
+            }
+
+            return $.ajax({
+                url: formUrl,
+                type: "POST",
+                data: formData,
+                mimeType: "multipart/form-data",
+                contentType: false,
+                dataType: type,
+                cache: false,
+                processData: false,
+                async: true
+            });
+        }
 
         
     </script>

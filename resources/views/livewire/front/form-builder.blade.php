@@ -7,6 +7,8 @@
                 <hr>
             @elseif($element[0]->type == 'radio' || $element[0]->type == 'checkbox')
                 @livewire('front.option-element', ['element'=>$element, 'options'=>$options])   
+            @elseif($element[0]->type == 'percentage')
+                @livewire('front.percentage-element', ['element'=>$element, 'options'=>$options])   
             @elseif($element[0]->type == 'multy_radio' || $element[0]->type == 'multy_checkbox')
                 @livewire('front.multyoption-element', ['element'=>$element]) 
             @elseif($element[0]->type == 'linear_scale')

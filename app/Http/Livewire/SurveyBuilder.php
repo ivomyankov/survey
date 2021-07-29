@@ -107,12 +107,13 @@ class SurveyBuilder extends Component
     }
 
     public function updatedText($propertyText, $propertyKey)
-    {        dd($propertyText, $propertyKey);
+    {        dd('updateText in SurveyBuilder', $propertyText, $propertyKey);
         $this->validateOnly($propertyText);
         Element::where('id', $propertyKey)
             ->update(['text' => $propertyText]);
  
     }
+
 /*
     public function changeType($id, $type)
     {       
@@ -132,20 +133,101 @@ class SurveyBuilder extends Component
         $this->emit('refresh');
     }
 */
+
     public function changeType($id, $type)
-    {       
-        if ($type == 'final_question'){
-            $this->finalQuestion($id, $type);
-        } else {
-            Element::where('id', $id)
-                ->update(['type' => $type]);
-        }
+    {   
+        Element::where('id', $id)
+            ->update(['type' => $type]);        
 
         $this->emit('refresh');
     }
 
-    public function finalQuestion($id, $type)
-    {
+
+    public function addFinalQuestions()
+    { 
+        $preFinal = Element::create([
+            'survey_id' => $this->survey,
+            'type'      => 'radio',
+            'text'      => 'Wie viele Mitarbeiter hat Ihr Unternehmen ?',
+            'parent_id' => 0,
+            'position'  => $this->nextPosition            
+        ]);
+
+        Element::insert([
+            [
+                'survey_id' => $this->survey,
+                'text'      => 'bis 5',
+                'parent_id' => $preFinal->id,
+                'position'  => 1
+            ],
+            [
+                'survey_id' => $this->survey,
+                'text'      => '6 bis 10',
+                'parent_id' => $preFinal->id,
+                'position'  => 2
+            ],
+            [
+                'survey_id' => $this->survey,
+                'text'      => '11 bis 25',
+                'parent_id' => $preFinal->id,
+                'position'  => 3
+            ],
+            [
+                'survey_id' => $this->survey,
+                'text'      => '26 bis 50',
+                'parent_id' => $preFinal->id,
+                'position'  => 4
+            ],
+            [
+                'survey_id' => $this->survey,
+                'text'      => '51 bis 100',
+                'parent_id' => $preFinal->id,
+                'position'  => 5
+            ],
+            [
+                'survey_id' => $this->survey,
+                'text'      => '101 bis 250',
+                'parent_id' => $preFinal->id,
+                'position'  => 6
+            ],
+            [
+                'survey_id' => $this->survey,
+                'text'      => 'über 501',
+                'parent_id' => $preFinal->id,
+                'position'  => 7
+            ]
+        ]);
+
+        $final = Element::create([            
+            'survey_id' => $this->survey,
+            'type'      => 'final_question',
+            'text'      => 'Davon entfallen',
+            'parent_id' => 0,
+            'position'  => $this->nextPosition+1
+        ]);
+
+        Element::insert([
+            [
+                'survey_id' => $this->survey,
+                'parent_id' => $final->id,
+                'position'  => 1
+            ],
+            [
+                'survey_id' => $this->survey,
+                'parent_id' => $final->id,
+                'position'  => 2
+            ],
+            [
+                'survey_id' => $this->survey,
+                'parent_id' => $final->id,
+                'position'  => 3
+            ]            
+        ]);      
+    }
+
+
+    public function finalQuestions($id, $type)
+    { dd('finalQuestions');
         Element::where('id', $id)
                 ->update([
                     'type' => $type,
@@ -182,6 +264,7 @@ class SurveyBuilder extends Component
         
         return;
     }
+
 
     public function updateOpt($id, $i)
     { 
@@ -225,6 +308,7 @@ class SurveyBuilder extends Component
             //->update(['text' => $propertyText]);
         }        
     }
+
 
     // validation
     public function validateSurvey()

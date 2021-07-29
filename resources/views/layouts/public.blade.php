@@ -34,6 +34,10 @@
                 margin-left:-15px;
                 color:      red;
             }
+
+            .errorBorder {
+                border: solid 2px red;
+            }
         </style>
     </head>
     <body style="background-color: rgb(240, 235, 248);">

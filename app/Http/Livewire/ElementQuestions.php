@@ -25,17 +25,20 @@ class ElementQuestions extends Component
         $this->types = $this->types(); 
         $this->opt(); 
     }
+    
 
     public function hydrate()
     {
         $this->scale();
     }
 
+
     public function render()
     {    
          
         return view('livewire.element-questions');
     }
+
 
     public function getElements()
     {
@@ -44,6 +47,7 @@ class ElementQuestions extends Component
             ->orderBy('position', 'ASC')
             ->get();
     }
+
 
     public function scale()
     {   
@@ -71,6 +75,7 @@ class ElementQuestions extends Component
         $this->elements->push($new_element);
     }
 
+
     public function required($id, $state)
     {
         Element::Find($id)
@@ -79,6 +84,7 @@ class ElementQuestions extends Component
         $this->element->required = $state;
     }
 
+
     public function visible($id, $state)
     {
         Element::Find($id)
@@ -86,6 +92,7 @@ class ElementQuestions extends Component
 
         $this->element->visible = $state;
     }
+
 
     public function delete($id, $action)
     {
@@ -103,6 +110,7 @@ class ElementQuestions extends Component
         }
         $this->getElements();
     }
+
 
     public function position($cur_pos, $new_pos)
     {
@@ -123,10 +131,12 @@ class ElementQuestions extends Component
         }        
     }
 
+
     public function types()
     {
         return Element::types();
     }
+
 
     public function opt()
     {

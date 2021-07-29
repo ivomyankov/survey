@@ -53,8 +53,9 @@ class SurveyController extends Controller
 
         $hashSurvey = md5('survey/'.$survey->id);
         $hashResults = md5('survey/'.$survey->id.'/results');
+        $hashSubmit = md5('survey/'.$survey->id.'/submit');
 
-        $survey->update(['hash_survey'=>$hashSurvey, 'hash_results'=>$hashResults ]);
+        $survey->update(['hash_survey'=>$hashSurvey, 'hash_results'=>$hashResults, 'hash_submit'=>$hashSubmit ]);
 
         return redirect()->route('getSurvey', ['survey'=>$survey->id]);
     }
@@ -196,7 +197,7 @@ class SurveyController extends Controller
         return response()->json($data);
     }
 
-    public function hashUrl($hash, FormServices $formServices){ 
+    public function hashUrl($hash, FormServices $formServices, Request $request){ 
         $surveyObj = new Survey;
         $surveys = $surveyObj->getSurveysHash(); 
         foreach ($surveys as $key => $survey) {
@@ -204,7 +205,25 @@ class SurveyController extends Controller
                 return \App::call('App\Http\Controllers\FormController@buildSurvey', ["survey" => $survey]);
             } else if($survey->hash_results == $hash){
                 return $this->getResultsPage($survey, $formServices);
+            } else if($survey->hash_submit == $hash){
+                //return \App::call('App\Http\Controllers\FormController@submitSurvey2', ["survey" => $survey, "request" => $request->all() ]);   
+                return $this->test2($survey, $request->all() );                
             }
+        }
+    }
+
+    public function checkHash($hash){ 
+        $surveyObj = new Survey;
+        $surveys = $surveyObj->getSurveysHash(); 
+        foreach ($surveys as $key => $survey) {
+            if($survey->hash_survey == $hash){  
+                //return \App::call('App\Http\Controllers\FormController@buildSurvey', ["survey" => $survey]);
+            } else if($survey->hash_results == $hash){
+                //return $this->getResultsPage($survey, $formServices);
+            } else if($survey->hash_submit == $hash){
+                //return \App::call('App\Http\Controllers\FormController@submitSurvey2', ["survey" => $survey, "request" => $request->all() ]);   
+                return $survey;             
+            }        
         }
     }
 
@@ -217,13 +236,12 @@ class SurveyController extends Controller
         ]);
     }
 
+    
+
     public function test(Element $element, Request $request)
     {    
         $info = json_decode($request->getContent(), true);
-        if($info['go_to'] == 0){
-            //$element->update(['go_to'=>NULL]); 
-            $info['go_to'] = 'NULL';
-        }
+        
         if($element->update($info)){
             $success = true;
         } else {
@@ -238,6 +256,7 @@ class SurveyController extends Controller
         
         return response()->json($data);
     }
+
 
     
 }

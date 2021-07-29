@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SurveyStoreRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Survey;
 use App\Models\Element;
@@ -83,11 +84,52 @@ class FormController extends Controller
         }
         return $required;  
     }
+/*
+    public function checkHash($hash){ 
+        $surveyObj = new Survey;
+        $surveys = $surveyObj->getSurveysHash(); 
+        foreach ($surveys as $key => $survey) {
+            if($survey->hash_survey == $hash){  
+                //return \App::call('App\Http\Controllers\FormController@buildSurvey', ["survey" => $survey]);
+            } else if($survey->hash_results == $hash){
+                //return $this->getResultsPage($survey, $formServices);
+            } else if($survey->hash_submit == $hash){
+                //return \App::call('App\Http\Controllers\FormController@submitSurvey2', ["survey" => $survey, "request" => $request->all() ]);   
+                return $survey;             
+            }        
+        }
+    }
+*/
+    public function ajaxPostForm($hash, SurveyStoreRequest $request)
+    {   
+        $surveyObj = new Survey;
+        $survey = $surveyObj->getSurveysIdByHash($hash); 
 
+        $success = false;
+
+        // Will return only validated data            
+        $validated = $request->validated(); 
+
+        if($survey){
+            if ($this->submitApiForm($validated, $survey[0]->id)){
+                $success = true;
+            }
+        } 
+        
+        $data = [
+            'data'   => $validated,
+            'success'   => $success
+        ];
+        
+
+        
+        return response()->json($data);
+    }
+/*
     public function submitSurvey(SurveyStoreRequest $request, $survey_id)
     {
         // Will return only validated data            
-        $validated = $request->validated();
+        $validated = $request->validated();        
         
         foreach($validated as $key => $value){
             if(is_array($value)){
@@ -113,5 +155,42 @@ class FormController extends Controller
         return redirect()->back()->with(compact('msg'));
         //return redirect('/exit', compact('user','identity','pallet','categories','warehouses'));  
         //return redirect('/exit', ['msg' => $msg, 'log' => $log]);         
+    }
+*/
+    private function submitApiForm($validated, $survey_id)
+    {     
+        // save validated to public/storage
+        Storage::disk('public')->append('survey_'.$survey_id.'.txt', "\n".$this->clientIp()."\n".date("F j, Y, g:i a")."\n".var_export($validated, TRUE));
+
+        foreach($validated as $key => $value){
+            if(is_array($value)){
+                $validated[$key] = "[".implode (", ", array_values($value))."]";
+            }
+        }
+        //dd($validated, $survey_id);
+        
+        $data = [
+            'survey_id' => $survey_id,
+            'data'    => json_encode($validated),
+        ];
+        
+        if (Data::create( $data)){
+            return true;
+        }
+        
+        return false;
+     
+    }
+
+    private function clientIp(){
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ip;
     }
 }

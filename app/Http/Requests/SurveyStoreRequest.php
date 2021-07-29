@@ -25,12 +25,11 @@ class SurveyStoreRequest extends FormRequest
     {
         //dd($this->request, $this->request->get('required'));
         $required = explode(',' ,$this->request->get('required'));
-        
+             
         //dd($this->request, $required);
-        foreach($this->request as $key => $val)
-        {          
-            if(substr($key, -1) == 's' || substr($key, -1) == 't'){
-                if($val != NULL && $val != ''){
+        foreach($this->request as $key => $val){          
+            if (substr($key, -1) == 's' || substr($key, -1) == 't'){
+                if ($val != NULL && $val != ''){
                     
                     $rules[$key] = 'max:1000';
                 }                
@@ -40,10 +39,11 @@ class SurveyStoreRequest extends FormRequest
 
             if (in_array(substr($key, 1), $required)) {
                 $key2 = array_search(substr($key, 1), $required); 
+                $rules[$key] .= '|required';
                 unset($required[$key2]);
             } 
         }
-        if($required[0] != ''){
+        if (!empty($required[0])){ 
             foreach ($required as $key => $value) {
                 $rules['q'.$value] = 'required';
                 unset($required[$key]);

@@ -56,7 +56,7 @@ class Element extends Model
             'linear_scale',
             'date',
             'time',
-            'final_question'
+            'percentage'
         ];
     }
 

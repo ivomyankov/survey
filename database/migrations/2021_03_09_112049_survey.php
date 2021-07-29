@@ -18,6 +18,7 @@ class Survey extends Migration
             $table->string('name' , 50)->nullable();
             $table->string('hash_survey' , 32)->nullable();
             $table->string('hash_results' , 32)->nullable();
+            $table->string('hash_submit' , 32)->nullable();
             $table->softDeletes();
         });
     }
