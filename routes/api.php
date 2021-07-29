@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/h/{hash}', [FormController::class, 'ajaxPostForm'])->name('ajaxPostForm');
+Route::middleware(['cors'])->post('/h/{hash}', [FormController::class, 'ajaxPostForm'])->name('ajaxPostForm');
 
 
 
