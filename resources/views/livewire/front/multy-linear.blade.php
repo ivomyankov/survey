@@ -9,7 +9,7 @@
             <br><i>Bitte vergeben Sie Noten von 1-5 für die Maßnahmen: „1“ bedeutet „sehr sinnvoll“ und „{{$scale}}“ bedeutet „nicht sinnvoll“. Selbstverständlich können Sie auch alle Noten dazwischen vergeben</i>
         @else
             <div class="row d-flex justify-content-center mt-5">
-                <div class="col-12 text-left">{{$element[0]->text}}</div>
+                <div class="col-12 text-left">{{$element[$key]->text}}</div>
                 @for($i = 1; $i<=$scale; $i++)
                     <div class="col-1 text-center">
                         {{$i}} 

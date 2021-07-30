@@ -7,7 +7,7 @@
             </div>
         @else
             <div class="row d-flex justify-content-center mt-5">
-                <div class="col-sm-{{ $scale < 7 ? (12-$scale) : 12 }} text-left vertical-align-center">{{$element[0]->text}}</div>
+                <div class="col-sm-{{ $scale < 7 ? (12-$scale) : 12 }} text-left vertical-align-center">{{$element[$key]->text}}</div>
                 @for($i = 1; $i<=$scale; $i++)
                     <div class="col-1 text-center position-relative">
                         @if(isset($result[$key][$i]))
