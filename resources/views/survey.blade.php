@@ -16,7 +16,7 @@
         <center><h1 class="p-5 m-5 text-waring"><i class="far fa-thumbs-down"></i>Versuchen Sie bitte später noch mal</h1></center>
     @else
         <form id=form action="{{-- route('submitSurvey',$survey->id) --}}" method="POST" style="max-width: 900px; margin: auto;">
-            <input type="hidden" name="required" value="{{implode(',', $required)}}">
+            <input type="hidden" name="required" value="{{implode(',', $required)}}"> 
             <div class="d-flex justify-content-center">
                 <h1 class="display-2 text-info" >{{$survey->name}}</h1>
             </div>
@@ -127,30 +127,7 @@
             }
 
         } // / check()
-/*
-        function check() {     
-            try {            
-                var sum = 0;
-                $('.last').each(function () {
-                    sum += Number($(this).val());
-                });
-                if (sum != 100) {
-                    $( ".last" ).addClass( "errorBorder" );
-                    $("#last").text('X1 + X2 + X3 = ' + sum + ' %');
-                    throw 'Bitte korrigieren Sie Ihre Eingabe.';
-                }            
-                //return true;
-                //alert('send');
-                send();
 
-            } // /try
-            catch(err) {
-                alert(err);
-                return false;
-            }
-
-        } // / check()
-*/
 
         function send(){ 
             var data = {};
@@ -171,7 +148,7 @@
             console.log(json, 'zzz');
 
             $.ajax({
-                url: "http://127.0.0.1:8000/api/h/{{$survey->hash_submit}}",
+                url: "{{url('/')}}/api/h/{{$survey->hash_submit}}",
                 method: "post",    
                 dataType: "json",
                 data: json,
