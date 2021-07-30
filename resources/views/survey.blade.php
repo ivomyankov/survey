@@ -15,10 +15,10 @@
     @elseif(session()->get('msg') == 'error')
         <center><h1 class="p-5 m-5 text-waring"><i class="far fa-thumbs-down"></i>Versuchen Sie bitte später noch mal</h1></center>
     @else
-        <form id=form class="py-5" action="{{-- route('submitSurvey',$survey->id) --}}" method="POST" style="max-width: 900px; margin: auto;">
+        <form id=form action="{{-- route('submitSurvey',$survey->id) --}}" method="POST" style="max-width: 900px; margin: auto;">
             <input type="hidden" name="required" value="{{implode(',', $required)}}">
             <div class="d-flex justify-content-center">
-                <h1 class="display-1 text-info d-none" >{{$survey->name}}</h1>
+                <h1 class="display-2 text-info" >{{$survey->name}}</h1>
             </div>
             @if($elements)
                 @foreach($elements as $element)
@@ -39,6 +39,7 @@
     <style>
         h1, h2 {
             color: #555;
+            margin-top: 4rem;
         }
 
         #survey-options-menu li{
