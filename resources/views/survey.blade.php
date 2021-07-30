@@ -78,7 +78,6 @@
         .vertical-align-center{ 
             display: flex; 
             align-items: center;  /*Aligns vertically center */
-            justify-content: center; /*Aligns horizontally center */
         }
 
     </style>

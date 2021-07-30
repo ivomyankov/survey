@@ -9,9 +9,9 @@
             <br><i>Bitte vergeben Sie Noten von 1-5 für die Maßnahmen: „1“ bedeutet „sehr sinnvoll“ und „{{$scale}}“ bedeutet „nicht sinnvoll“. Selbstverständlich können Sie auch alle Noten dazwischen vergeben</i>
         @else
             <div class="row d-flex justify-content-center mt-5">
-                <div class="col-12 text-left">{{$element[$key]->text}}</div>
+                <div class="col-sm-{{ $scale < 7 ? (12-$scale) : 12 }} vertical-align-center">{{$element[$key]->text}}</div>
                 @for($i = 1; $i<=$scale; $i++)
-                    <div class="col-1 text-center">
+                    <div class="col-1 text-center position-relative">
                         {{$i}} 
                         <br>
                         <input class="form-check-input q{{$element[$key]->id}}" type="radio" value="{{$i}}" name="q{{$element[$key]->id}}" >
