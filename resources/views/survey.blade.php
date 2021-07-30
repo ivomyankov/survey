@@ -25,7 +25,7 @@
                     @livewire('front.form-builder', ['element'=>$element, 'options'=>$options ])                  
                 @endforeach            
                 <div class="d-flex justify-content-center">
-                    <button type="button" onclick="submt()" class="btn btn-info w-25 my-5" value="Send" ><< Weiter >></button>
+                    <button type="button" onclick="submtt()" class="btn btn-info w-25 my-5" value="Send" ><< Weiter >></button>
                 </div>
             @endif
         </form>
@@ -88,9 +88,10 @@
     <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script>    
-        function submt(){
+        function submtt(){
             $( ".rounded" ).removeClass( "errorBorder" );
             $( ".error" ).text( '' );
+            var errors = 0;
 
             /*if ( $(".last" ).length > 0 ) {
                 if ( check('last') != true ){
@@ -99,8 +100,13 @@
             } */
 
             $( ".percentage, .last" ).each(function() {
-                checkSum( $(this).attr('id') );
-            });                        
+                errors = errors+checkSum( $(this).attr('id') );
+            });
+            
+            if(errors == 0) {
+                //alert('go');
+                send();
+            }
         };
 
         function checkSum(id) {     
@@ -115,15 +121,15 @@
                     $( "#"+id ).addClass( "errorBorder" );
                     $(".error").text(elements.substring(3) + ' = ' + sum + '% < 100%');
                     throw 'Bitte korrigieren Sie Ihre Eingabe.';
-                    
                 }            
                 //alert('send after check');
-                send();
+                //send();
+                return 0;
 
             } // /try
             catch(err) {
                 alert(err);
-                return false;
+                return 1;
             }
 
         } // / check()
@@ -209,23 +215,8 @@
             $('.connectedSortable .card-header').css('cursor', 'move');
 
         });
-/*
-        $('input[type=radio]').change(function() {
-            if (this.value == 186) {
-                if ($(this).is(':checked')) {
-                    $('#202,#205,#169,#176,#193').fadeOut();
-                }
-            } else if (this.value == 187) {
-                if ($(this).is(':checked')) {
-                    $('#202').fadeIn();
-                    $('#205,#169,#176').fadeOut();
-                }
-            }
-            if ($('#188').is(':checked')) {
-                alert(188);
-            }
-        });
-*/
+
+        
         
 
         var data = JSON.parse('{!!json_encode($options)!!}');
@@ -273,6 +264,36 @@
                 $( "#"+id ).prop('checked', false);
             }
 
+        });
+        $(document).ready(function () {        
+
+            // q* Ako чекбокса се ънчекне, изтрива сонстигес.
+            //          if ($('input!').is(':checked')) {}
+/*
+            $("input[type=checkbox]").change(function () {
+                if (!$(this).is(':checked')) {
+                var id = $(this).attr('id');
+                id = id.slice(0, 1) +'_'+ id.slice(1) ;
+                if($("#" + id).length != 0) {
+                    //alert('Remove value of id:'+id);
+                    $('#'+id).val('');
+                }
+                }
+            });
+            // q* условие
+
+            // q* Ako смени радио бутон и пред сонстигес вече не е чекнато, изтрива сонстигес.
+
+            $("input[type=radio]").change(function () {
+                var name = $(this).attr('name');alert(name);
+                //name = name.replace("q", "q_");
+                if($('input[name="'+name+'"]').length ) { //alert('there is sonstiges. ID:'+$('input[name="'+name+'"]').attr('id')+ ' ALT: '+$('input[name="'+name+'"]').attr('alt'));
+                if($(this).attr('id') !== $('input[name="'+name+'"]').attr('alt'))
+                alert('Delete val ID: '+$('input[name="'+name+'"]').attr('id'));
+                $('#'+$('input[name="'+name+'"]').attr('id')).val('');
+                }
+            });*/
+            // q* условие
         });
 
         function processAjaxRequest(type, formData, formUrl){
