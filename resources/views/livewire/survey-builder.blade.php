@@ -10,7 +10,7 @@
                             @livewire('element-text', ['element_id'=>$element->id, 'text'=>$element->text, 'type'=>$element->type], key($element->id))                    
                         @elseif($element->type == 'hr')
                             <hr>
-                        @elseif($element->type == 'radio' || $element->type == 'checkbox' || $element->type == 'short_text' || $element->type == 'long_text' || $element->type == 'linear_scale' || $element->type == 'multy_radio' || $element->type == 'multy_checkbox' || $element->type == 'percentage' || $element->type == 'final_question')
+                        @elseif($element->type == 'radio' || $element->type == 'checkbox' || $element->type == 'short_text' || $element->type == 'long_text' || $element->type == 'linear_scale' || $element->type == 'multy_linear' || $element->type == 'multy_radio' || $element->type == 'multy_checkbox' || $element->type == 'percentage' || $element->type == 'final_question')
                             @livewire('element-questions', ['element'=>$element, 'parents'=>$elements], key($element->id)) 
                         @endif
                     </div>

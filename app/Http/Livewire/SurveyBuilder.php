@@ -136,9 +136,19 @@ class SurveyBuilder extends Component
 
     public function changeType($id, $type)
     {   
-        Element::where('id', $id)
-            ->update(['type' => $type]);        
-
+        if($type == 'linear_scale' || $type == 'multy_linear'){
+            Element::where('id', $id)
+            ->update(
+                [
+                    'type' => $type,
+                    'opt' => '{"linear":5}'
+                ]
+            );  
+        } else {
+            Element::where('id', $id)
+                ->update(['type' => $type]);  
+        }
+              
         $this->emit('refresh');
     }
 

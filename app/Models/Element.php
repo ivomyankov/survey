@@ -54,6 +54,7 @@ class Element extends Model
             'multy_checkbox',
             'multy_radio',
             'linear_scale',
+            'multy_linear',
             'date',
             'time',
             'percentage'

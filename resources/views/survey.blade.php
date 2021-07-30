@@ -74,6 +74,12 @@
             font-size:12px;
         }
 
+        .vertical-align-center{ 
+            display: flex; 
+            align-items: center;  /*Aligns vertically center */
+            justify-content: center; /*Aligns horizontally center */
+        }
+
     </style>
 @endpush
 

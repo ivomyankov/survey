@@ -23,6 +23,14 @@
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('vendor/summernote/summernote-bs4.min.css') }}">
 
+        <style>
+            .vertical-align-center{ 
+                display: flex; 
+                align-items: center;  /*Aligns vertically center */
+                justify-content: center; /*Aligns horizontally center */
+            }
+        </style>
+
         @livewireStyles
     </head>
     <body style="background-color: rgb(240, 235, 248);">
@@ -44,6 +52,8 @@
                                     @livewire('results.multy-option', ['element'=>$element, 'results'=>$results])
                                 @elseif($element[0]->type == 'linear_scale')
                                     @livewire('results.linear', ['element'=>$element, 'results'=>$results])
+                                @elseif($element[0]->type == 'multy_linear')
+                                    @livewire('results.multy-linear', ['element'=>$element, 'results'=>$results])
                                 @elseif($element[0]->type == 'short_text' || $element[0]->type == 'long_text')
                                     @livewire('results.text', ['element'=>$element, 'results'=>$results])
                                 @elseif($element[0]->type == 'percentage')
