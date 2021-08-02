@@ -40,7 +40,7 @@
         </header>
         <section class="content">
             <div class="container">
-                <b>Participants: {{count($survey->data)}}</b>
+                <b>Participants: {{count($survey->data)}}</b> {{--dd($results)--}}
                 @if(!empty($results)) 
                     <div class="row">
                     @if($surveyTree)

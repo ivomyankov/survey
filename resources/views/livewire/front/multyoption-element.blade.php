@@ -31,7 +31,7 @@
                             @endif
                         </div>
                         @for($i=1; $i<=count($rows); $i++)
-                        <div class="col-sm-2 text-center"><input class="form-check-input q{{$element[0]->id}}" type="{{$element[0]->type}}" value="{{$rows[$i-1]->id}}" name="q{{$option->id}}[]" id="q{{$option->id}}_{{$rows[$i-1]->id}}"></div>
+                        <div class="col-sm-2 text-center"><input class="form-check-input q{{$element[0]->id}}" type="{{$element[0]->type}}" value="{{$rows[$i-1]->id}}" name="q{{$option->id}}" id="q{{$option->id}}_{{$rows[$i-1]->id}}"></div>
                         @endfor
                     </div>
                 @endif

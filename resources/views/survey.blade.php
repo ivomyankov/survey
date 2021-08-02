@@ -150,7 +150,7 @@
                 }
                 data[key].push(value);
             });
-            var json = JSON.stringify(data).replace('[]',''); //on stringified var we remove '[]' from keys => 'q90[]' to 'q90'
+            var json = JSON.stringify(data); //on stringified var we remove '[]' from keys => 'q90[]' to 'q90'
             console.log(json, 'zzz');
 
             $.ajax({
