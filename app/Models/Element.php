@@ -33,6 +33,15 @@ class Element extends Model
         return $elements;
     }
 
+    public function getElementsByParentWithTrashed($parent)
+    {
+        $elements = Element::withTrashed()
+                        ->where('parent_id', $parent)
+                        ->orderBy('position', 'ASC')
+                        ->get();
+        return $elements;
+    }
+
     public function getOptions($survey)
     {
         $options = Element::where('survey_id', $survey)
@@ -40,6 +49,22 @@ class Element extends Model
                         ->orderBy('id', 'ASC')
                         ->get();
         return $options;
+    }
+
+    public function deleteAndReindex($element, $parent)
+    {
+        Element::withTrashed()
+                ->where('id', $element)
+                ->forceDelete();              
+       
+        $elements = $this->getElementsByParentWithTrashed($parent);
+        foreach ($elements as $key => $element)
+        {
+            $element->position = $key+1;
+            $element->save();
+        }
+        //dd($elements);
+        return true;
     }
 
 

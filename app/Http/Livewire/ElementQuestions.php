@@ -94,7 +94,7 @@ class ElementQuestions extends Component
     }
 
 
-    public function delete($id, $action)
+    public function delete($id, $action, $parent=null)
     {
         if($action == 'soft'){
             Element::Find($id)->delete();
@@ -104,16 +104,15 @@ class ElementQuestions extends Component
                 ->where('id', $id)
                 ->restore();
         } else if($action == 'destroy'){
-            Element::withTrashed()
-                ->where('id', $id)
-                ->forceDelete();
+            $elementObj = new Element;
+            $elementObj->deleteAndReindex($id, $parent);
         }
         $this->getElements();
     }
 
 
     public function position($cur_pos, $new_pos)
-    {
+    { dd($cur_pos, $new_pos);
         if($new_pos <= $this->elements->count() && $new_pos > 0){
             //dd($id, $cur_pos, $new_pos, $this->elements->count(), $this->elements);
             foreach($this->elements as $element){

@@ -124,7 +124,7 @@ class SurveyController extends Controller
             $element_id = (int)str_replace("sub_", "", $data['element_id']);
         }
         $elementObj = new Element;
-        $elements = $elementObj->getElementsByParent($data['parent']);         //dd($elements);
+        $elements = $elementObj->getElementsByParentWithTrashed($data['parent']);         //dd($elements);
 
         foreach($elements as $key => $element){
             if($element->id != $element_id){    
@@ -143,7 +143,8 @@ class SurveyController extends Controller
         //dd($oldOrder, $newOrder);
 
         foreach($newOrder as $key => $element){
-            Element::where('id', $element)
+            Element::withTrashed()
+                ->where('id', $element)
                 ->update(['position' => $key+1]);  
         }
 

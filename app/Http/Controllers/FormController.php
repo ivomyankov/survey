@@ -109,7 +109,7 @@ class FormController extends Controller
 
         // Will return only validated data            
         $validated = $request->validated(); 
-
+        
         if($survey){
             if ($this->submitApiForm($validated, $survey[0]->id)){
                 $success = true;

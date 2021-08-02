@@ -91,7 +91,7 @@
         function submtt(){
             $( ".rounded" ).removeClass( "errorBorder" );
             $( ".error" ).text( '' );
-            var errors = 0;
+            let errors = 0;
 
             /*if ( $(".last" ).length > 0 ) {
                 if ( check('last') != true ){
@@ -119,7 +119,7 @@
                 });
                 if (sum != 100) {
                     $( "#"+id ).addClass( "errorBorder" );
-                    $(".error").text(elements.substring(3) + ' = ' + sum + '% < 100%');
+                    $("#"+id+" > .error").text(elements.substring(3) + ' = ' + sum + '% < 100%');
                     throw 'Bitte korrigieren Sie Ihre Eingabe.';
                 }            
                 //alert('send after check');
@@ -128,7 +128,7 @@
 
             } // /try
             catch(err) {
-                alert(err);
+                //alert(err);
                 return 1;
             }
 
@@ -247,13 +247,8 @@
 
         });
 
-        $('.sons').change(function() {
-            var id = $(this).attr('id');
-            if(!$(this).is(':checked') && !$(this).is(':text')){
-                $('#q'+id+'_s').val('');
-            }
-        });
-
+     
+        // if sonstigues is filled or emptied will check or uncheck 
         $(".sonstiges").focusout(function(){
             var id = $(this).attr('id');
             id = id.substring(1).slice(0,-2);
@@ -265,35 +260,21 @@
             }
 
         });
+
+        //if check/radio infront sonstigues is not checked will empty sonstigues
+        $("input[type=checkbox], input[type=radio]").change(function () {
+            var questionId = $(this).attr('alt'); 
+            if ($("#"+questionId+" .sons").length > 0){ 
+                let sons = $("#"+questionId+" .sons").attr("id");
+                if(!$("#"+sons).is(':checked')){
+                    $('#q'+sons+'_s').val('');
+                }
+            }
+        });
+
+
         $(document).ready(function () {        
 
-            // q* Ako чекбокса се ънчекне, изтрива сонстигес.
-            //          if ($('input!').is(':checked')) {}
-/*
-            $("input[type=checkbox]").change(function () {
-                if (!$(this).is(':checked')) {
-                var id = $(this).attr('id');
-                id = id.slice(0, 1) +'_'+ id.slice(1) ;
-                if($("#" + id).length != 0) {
-                    //alert('Remove value of id:'+id);
-                    $('#'+id).val('');
-                }
-                }
-            });
-            // q* условие
-
-            // q* Ako смени радио бутон и пред сонстигес вече не е чекнато, изтрива сонстигес.
-
-            $("input[type=radio]").change(function () {
-                var name = $(this).attr('name');alert(name);
-                //name = name.replace("q", "q_");
-                if($('input[name="'+name+'"]').length ) { //alert('there is sonstiges. ID:'+$('input[name="'+name+'"]').attr('id')+ ' ALT: '+$('input[name="'+name+'"]').attr('alt'));
-                if($(this).attr('id') !== $('input[name="'+name+'"]').attr('alt'))
-                alert('Delete val ID: '+$('input[name="'+name+'"]').attr('id'));
-                $('#'+$('input[name="'+name+'"]').attr('id')).val('');
-                }
-            });*/
-            // q* условие
         });
 
         function processAjaxRequest(type, formData, formUrl){

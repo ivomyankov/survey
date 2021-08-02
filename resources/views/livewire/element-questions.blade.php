@@ -5,7 +5,7 @@
                 <div class="col-6  @if($element->trashed()) disabled @endif">@livewire('element-text', ['element_id'=>$element->id, 'text'=>$element->text, 'type'=>$element->type], key($element->id))</div>
                 <div class="col-6 text-right">
                     <div class="card-tools">                        
-                        #{{$element->id}} &nbsp; 
+                        #{{$element->id}}   &nbsp; 
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus fa-2x"></i>
                         </button>
@@ -72,7 +72,7 @@
                             <div class="col-7 pt-1" @if ($elem->trashed())  style="pointer-events: none; opacity: 0.5; background: #CCC;"  @endif >                                                        
                                 @if($elem->type == 'short_text' || $elem->type == 'long_text')
                                     Other...
-                                @else                            
+                                @else                          
                                     @livewire('element-text', ['element_id'=>$elem->id, 'text'=>$elem->text, 'type'=>$elem->type], key($elem->id))
                                 @endif
                             </div>
@@ -91,7 +91,7 @@
                                     </div>
                                     @if ($elem->trashed())  
                                     <div class="col-1 position-relative"><i wire:click="delete({{$elem->id}}, 'restore')" title="restore" class="position-absolute fas fa-trash-restore"></i></div>
-                                    <div class="col-1 position-relative"><i wire:click="delete({{$elem->id}}, 'destroy')" title="delete" class="position-absolute fas fa-trash"></i></div>
+                                    <div class="col-1 position-relative"><i wire:click="delete({{$elem->id}}, 'destroy', {{$elem->parent_id}})" title="delete" class="position-absolute fas fa-trash"></i></div>
                                     @else
                                     <div class="col-2 position-relative text-right"><i wire:click="delete({{$elem->id}}, 'soft')" title="disable" class="position-absolute fas fa-times"></i></div>
                                     @endif                                    
