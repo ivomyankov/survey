@@ -34,10 +34,10 @@
                     </div>
                     <!-- ./col -->
                 @endforeach
-                <div id="approve" class="shadow mx-auto col-md-8" style="z-index: 9999; display:none">
+                <div id="approve" class="shadow mx-auto col-md-8 text-center my-4" style="z-index: 9999; display:none">
                     <h2>Are you sure you want to flush the results of survey <span id="surveyToFlush"></span></h2>
                     <button onclick="cancel()" class="btn btn-success float-left m-5 px-4" role="button"><i class="fas fa-eject"></i> Cancel</button>
-                    <a href="{{ URL::route('flushSurvey', ['survey'=>$survey->id]) }}" class="btn btn-danger float-right m-5 px-4" role="button"><i class="fas fa-toilet"></i> Flush</a>
+                    <a id="linkToFlush" href="" class="btn btn-danger float-right m-5 px-4" role="button"><i class="fas fa-toilet"></i> Flush</a>
                 </div>
             </div>
             
@@ -54,6 +54,7 @@
         function flush(id){
             $("#approve").fadeIn();
             $("#surveyToFlush").text("#"+id);
+            $("#linkToFlush").attr("href", '{{URL::to('/')}}/dashboard/flush/'+id); // Set herf value
         }
 
         function cancel(){
