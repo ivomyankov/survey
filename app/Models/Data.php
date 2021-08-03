@@ -33,6 +33,13 @@ class Data extends Model
 
         return ;
     }
+
+    public function flush($surveyId)
+    {      
+        Data::where('survey_id', $surveyId)->delete();        
+
+        return ;
+    }
     
 
 }

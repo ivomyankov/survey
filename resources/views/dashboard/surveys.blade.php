@@ -23,6 +23,7 @@
                                 <p>#{{$survey->id}}: {{$survey->name}}</p>
                             </div>
                             <div class="icon">
+                                <i class="fas fa-toilet" onclick="flush({{$survey->id}})" style="position: absolute; right: 90px; font-size: 30px;"></i>
                                 <i class="fas fa-poll"></i>
                             </div>
                             <a href="{{ URL::route('getSurvey', ['survey'=>$survey->id]) }}" class="small-box-footer" style="display: inline-block; width:49%;">to survey <i class="fas fa-arrow-circle-right"></i></a>
@@ -33,8 +34,13 @@
                     </div>
                     <!-- ./col -->
                 @endforeach
-
+                <div id="approve" class="shadow mx-auto col-md-8" style="z-index: 9999; display:none">
+                    <h2>Are you sure you want to flush the results of survey <span id="surveyToFlush"></span></h2>
+                    <button onclick="cancel()" class="btn btn-success float-left m-5 px-4" role="button"><i class="fas fa-eject"></i> Cancel</button>
+                    <a href="{{ URL::route('flushSurvey', ['survey'=>$survey->id]) }}" class="btn btn-danger float-right m-5 px-4" role="button"><i class="fas fa-toilet"></i> Flush</a>
+                </div>
             </div>
+            
         </div>
     </section>
 @stop
@@ -44,5 +50,15 @@
 @stop
 
 @section('js')
-    
+    <script>
+        function flush(id){
+            $("#approve").fadeIn();
+            $("#surveyToFlush").text("#"+id);
+        }
+
+        function cancel(){
+            $("#approve").fadeOut();
+            $("#surveyToFlush").text("#"+id);
+        }
+    </script>
 @stop

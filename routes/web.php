@@ -41,6 +41,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard/')->group(fun
     Route::get('surveys', [SurveyController::class, 'getSurveys'])->name('getSurveys');
     Route::get('survey', [SurveyController::class, 'newSurvey'])->name('newSurvey');
     Route::get('survey/{survey}', [SurveyController::class, 'getSurvey'])->name('getSurvey');
+    Route::get('flush/{survey}', [SurveyController::class, 'flushSurvey'])->name('flushSurvey');
     Route::get('survey/{survey}/results', [SurveyController::class, 'getResults'])->name('getResults');
 });
 

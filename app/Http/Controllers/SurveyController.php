@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\FormServices;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Survey;
 use App\Models\Element;
+use App\Models\Data;
 
 class SurveyController extends Controller
 {
@@ -106,6 +108,16 @@ class SurveyController extends Controller
         } 
         //return redirect('/survey');
         return response()->json($survey, 204);
+    }
+
+    public function flushSurvey($surveyId)
+    {
+        $dataObj = new Data;
+        $data = $dataObj->flush($surveyId);     
+
+        Storage::disk('public')->move('survey_'.$surveyId.'.txt', 'survey_'.$surveyId.'-'.date("m.d.Y_h-i").'.txt');
+        
+        return redirect()->route('getSurveys');
     }
 
     public function getSurveyPage($survey_id)
