@@ -44,4 +44,12 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard/')->group(fun
     Route::get('survey/{survey}/results', [SurveyController::class, 'getResults'])->name('getResults');
 });
 
+// generate symlink for /storage/app/public
+/*
+Route::get('symlink', function (){
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    echo 'ok';
+});
+*/
+
 
