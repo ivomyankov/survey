@@ -115,7 +115,10 @@ class SurveyController extends Controller
         $dataObj = new Data;
         $data = $dataObj->flush($surveyId);     
 
-        Storage::disk('public')->move('survey_'.$surveyId.'.txt', 'survey_'.$surveyId.'-'.date("m.d.Y_h-i").'.txt');
+        // if log file excists will rename it
+        if(Storage::disk('public')->exists('survey_'.$surveyId.'.txt')){
+            Storage::disk('public')->move('survey_'.$surveyId.'.txt', 'survey_'.$surveyId.'-'.date("m.d.Y_h-i").'.txt');
+        }        
         
         return redirect()->route('getSurveys');
     }
