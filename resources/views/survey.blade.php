@@ -226,7 +226,7 @@
             //alert(id);            
             
             if (data.hasOwnProperty(id)) {                
-                alert('show:' + data[id].show + ' / hide:' + data[id].hide);
+                //alert('show:' + data[id].show + ' / hide:' + data[id].hide);
                 if(data[id].show !== undefined){
                     //alert(data[id].show);
                     //if is checkbox and not checked then hide the the id's from hide field 
