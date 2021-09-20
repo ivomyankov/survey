@@ -1,4 +1,4 @@
-<div id="{{$element[0]->id}}" class="rounded shadow bg-light p-4 position-relative {{ $element[0]->visible === 0 ? 'hidden' : '' }} mt-5" alt="{{$element[0]->id}}">{{--dd($element)--}}
+<div id="{{$element[0]->id}}" class="zz rounded shadow bg-light p-4 position-relative {{ $element[0]->visible === 0 ? 'hidden' : '' }} mt-5" alt="{{$element[0]->id}}">{{--dd($element)--}}
     @if($element[0]->required == 1)
         <i class="text-danger position-absolute trquired" style="top:5px; right:10px;">required</i>
     @endif
