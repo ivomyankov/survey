@@ -240,7 +240,7 @@
                     //alert(data[id].hide);
                     $(data[id].hide).fadeOut();
                     //alert(data[id].hide.replace(/\#/g, '.q'));
-                    $(data[id].hide.replace(/\#/g, '.q')).prop("checked", false);
+                    $(data[id].hide.replace(/\#/g, '.q')).prop("checked", false).val('');
                 }
 
             }    
