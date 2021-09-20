@@ -7,6 +7,7 @@
     @foreach($element as $key => $option)
         @if($key==0)
             <b>{{$element[0]->text}}</b>
+            <br><i>Bitte vergeben Sie Noten von 1-{{$scale}} für die Maßnahmen: „1“ bedeutet „sehr sinnvoll“ und „{{$scale}}“ bedeutet „nicht sinnvoll“. Selbstverständlich können Sie auch alle Noten dazwischen vergeben</i>
             @if($element[0]->type == 'checkbox')
                 <i>(Mehrfachnennungen möglich)</i>
             @endif

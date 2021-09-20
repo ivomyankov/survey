@@ -52,15 +52,16 @@ class ElementQuestions extends Component
     public function scale()
     {   
         //dd($this->element['type']);
-        if ($this->element['type'] == 'linear_scale' && !is_null($this->element['opt']) ) {                
+        if (($this->element['type'] == 'linear_scale' || $this->element['type'] == 'multy_linear') && !is_null($this->element['opt']) ) {                
             $scale = json_decode($this->element['opt'], true);
             if (array_key_exists('linear', $scale)) {
-                $this->scale = $scale['linear'];
+                $this->scale = $scale['linear']; 
+                //dd($this->scale);
             }
         }
         
         
-        //dd($this->scale);
+        
     }
 
     public function addOption($survey_id, $parent_id, $position, $type = NULL)
