@@ -21,7 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['cors'])->post('/h/{hash}', [FormController::class, 'ajaxPostForm'])->name('ajaxPostForm');
 
-
+Route::middleware('auth:api')->group(function () {
+    Route::get('/test/get', function () {
+        echo 'Get';
+    });
+    
+    Route::post('/test/post', function () {
+        echo 'POST';
+    });
+});
 
 //Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     //Route::get('/survey/{$survey}/results', [SurveyController::class, 'getResults'])->name('getResults');
@@ -30,3 +38,4 @@ Route::middleware(['cors'])->post('/h/{hash}', [FormController::class, 'ajaxPost
     Route::patch('/element/{element}/opt', [SurveyController::class, 'opt'])->name('opt');
     Route::post('/element/{element}/test', [SurveyController::class, 'test'])->name('test');
 //});
+

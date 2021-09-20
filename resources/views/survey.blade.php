@@ -223,7 +223,7 @@
 
         $('.opt').change(function() {
             var id = $(this).val();            
-            //alert(id);            
+            alert(id);            
             
             if (data.hasOwnProperty(id)) {                
                 //alert(data[id].show + ' / ' + data[id].hide);
