@@ -7,7 +7,6 @@
 @stop
 
 @section('content') 
-<span style="font-size:1.5rem;" class="p-2">Umfrage</span>
     <center><h1 class="p-5 m-5 text-success" style="display:none;"><i class="far fa-thumbs-up"></i>Vielen Dank für Ihre Teilnahme</h1></center>
     <center><h1 class="p-5 m-5 text-waring" style="display:none;"><i class="far fa-thumbs-down"></i>Versuchen Sie bitte später noch mal</h1></center>
 
@@ -18,6 +17,8 @@
     @else
         <form id=form action="{{-- route('submitSurvey',$survey->id) --}}" method="POST" style="max-width: 900px; margin: auto;">
             <input type="hidden" name="required" value="{{implode(',', $required)}}"> 
+
+            <h1 class="display-2 text-info text-center w-100" >Umfrage</h1>
             <div class="d-flex justify-content-center">
                 <h1 class="display-2 text-info" >{{$survey->name}}</h1>
             </div>
