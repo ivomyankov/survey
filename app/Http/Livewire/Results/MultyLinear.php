@@ -34,8 +34,9 @@ class MultyLinear extends Component
             if($key>0){
                 if(array_key_exists('q'.$this->element[$key]->id, $this->results)) {
                     // $devide -> count of people answered this question
-                    $this->devide = count($this->results['q'.$this->element[$key]->id]); 
-                    $this->result[$key] = array_count_values($this->results['q'.$this->element[$key]->id]);           
+                    //$this->devide = count($this->results['q'.$this->element[$key]->id]);                     
+                    $this->result[$key] = array_count_values($this->results['q'.$this->element[$key]->id]);   
+                    $this->devide = array_map('array_sum', $this->result);        
                 }
             }
         }

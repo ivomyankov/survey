@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Results</title>
         <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
         <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">              
         <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
@@ -46,13 +46,13 @@
                     @if($surveyTree)
                         @foreach($surveyTree as $element)
                             @if($element[0]->parent_id == 0)
-                                @if($element[0]->type == 'checkbox' || $element[0]->type == 'radio')
+                                @if($element[0]->type == 'checkbox' || $element[0]->type == 'radio') 
                                     @livewire('results.checkbox', ['element'=>$element, 'results'=>$results])
                                 @elseif($element[0]->type == 'multy_checkbox' || $element[0]->type == 'multy_radio')
                                     @livewire('results.multy-option', ['element'=>$element, 'results'=>$results])
                                 @elseif($element[0]->type == 'linear_scale')
                                     @livewire('results.linear', ['element'=>$element, 'results'=>$results])
-                                @elseif($element[0]->type == 'multy_linear')
+                                @elseif($element[0]->type == 'multy_linear') 
                                     @livewire('results.multy-linear', ['element'=>$element, 'results'=>$results])
                                 @elseif($element[0]->type == 'short_text' || $element[0]->type == 'long_text')
                                     @livewire('results.text', ['element'=>$element, 'results'=>$results])

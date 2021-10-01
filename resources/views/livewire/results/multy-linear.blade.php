@@ -1,4 +1,4 @@
-<div class="col-12 bg-light rounded shadow p-4 my-4">
+<div class="col-12 bg-light rounded shadow p-4 my-4">{{--dd($result, $devide)--}}
     @foreach($element as $key => $option)
         @if($key==0)
             <div class="row">  
@@ -12,8 +12,8 @@
                     <div class="col-1 text-center position-relative">
                         @if(isset($result[$key][$i]))
                             <div class="progress vertical">
-                                <div class="bar bg-info" style="height: {{round(($result[$key][$i]/$devide)*100, 1)}}%;width:100%;position: absolute; bottom: 0;"></div>
-                                <span class="position-absolute text-info" style="bottom: {{round(($result[$key][$i]/$devide)*100)+5}}%; left:0;">{{round(($result[$key][$i]/$devide)*100, 1)}}%</span>
+                                <div class="bar bg-info" style="height: {{round(($result[$key][$i]/$devide[$key])*100, 1)}}%;width:100%;position: absolute; bottom: 0;"></div>
+                                <span class="position-absolute text-info" style="bottom: {{round(($result[$key][$i]/$devide[$key])*100)+5}}%; left:0;">{{round(($result[$key][$i]/$devide[$key])*100, 1)}}%</span>
                             </div>
                         @else
                             <div class="progress vertical">
