@@ -18,9 +18,8 @@
         <form id=form action="{{-- route('submitSurvey',$survey->id) --}}" method="POST" style="max-width: 900px; margin: auto;">
             <input type="hidden" name="required" value="{{implode(',', $required)}}"> 
 
-            <h1 class="display-2 text-info text-center w-100" >Umfrage</h1>
             <div class="d-flex justify-content-center">
-                <h1 class="display-2 text-info" >{{$survey->name}}</h1>
+                <h1 class="display-3 text-info" >{{$survey->name}}</h1>
             </div>
             @if($elements)
                 @foreach($elements as $element)
