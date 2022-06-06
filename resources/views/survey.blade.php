@@ -19,6 +19,9 @@
             <input type="hidden" name="required" value="{{implode(',', $required)}}"> 
 
             <div class="d-flex justify-content-center">
+                @if (in_array(substr_replace( $survey->name, '', -5 ), array("Aussteller", "Messebesucher", "Dienstleister") ))
+<img src="{{ asset('/img/flotte.png') }}" style="float:left;margin-right: 50px;height: 100px;margin-top: 50px;" >  
+                @endif
                 <h1 class="display-3 text-info" >{{$survey->name}}</h1>
             </div>
             @if($elements)
