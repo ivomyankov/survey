@@ -1,0 +1,1 @@
+<img src="{{$element[0]->text}}" style="{{ $element[0]->style }}">

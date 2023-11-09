@@ -9,7 +9,9 @@
                         @if($element->type == 'h1' || $element->type == 'h2' || $element->type == 'p' || $element->type == 'b' || $element->type == 'i' )
                             @livewire('element-text', ['element_id'=>$element->id, 'text'=>$element->text, 'type'=>$element->type], key($element->id))                    
                         @elseif($element->type == 'hr')
-                            <hr>
+                            <hr> 
+                        @elseif($element->type == 'image')
+                            @livewire('element-image', ['element'=>$element, 'element_id'=>$element->id, 'text'=>$element->text, 'type'=>$element->type], key($element->id)) 
                         @elseif($element->type == 'radio' || $element->type == 'checkbox' || $element->type == 'short_text' || $element->type == 'long_text' || $element->type == 'linear_scale' || $element->type == 'multy_linear' || $element->type == 'multy_radio' || $element->type == 'multy_checkbox' || $element->type == 'percentage' || $element->type == 'final_question')
                             @livewire('element-questions', ['element'=>$element, 'parents'=>$elements], key($element->id)) 
                         @endif
@@ -19,6 +21,7 @@
             <div class="col-sm-1">
                 <div class="w-100 bg-light shadow rounded" style="position: fixed; width: 6% !important;">
                     <ul id="survey-options-menu" >
+                        <li><i wire:click="addImage" title="Add image" class="fas fa-ticket-alt fa-2x"></i></li>
                         <li><i wire:click="addQuestion" title="Add question" class="far fa-plus-square fa-2x"></i></li>
                         <li><i wire:click="addHeading" title="Add heading" class="fas fa-heading fa-2x"></i></li>
                         <li><i wire:click="addBold" title="Add bold text" class="fas fa-bold fa-2x"></i></li>

@@ -52,6 +52,16 @@ class SurveyBuilder extends Component
         ]);
     }
 
+    public function addImage($parent = 0) 
+    {   
+        Element::create([
+            'survey_id' => $this->survey,
+            'type'      => 'image',
+            'parent_id' => $parent,
+            'position'  => $this->nextPosition
+        ]);
+    }
+
     public function addHeading($parent = 0) 
     {   
         Element::create([
@@ -107,7 +117,7 @@ class SurveyBuilder extends Component
     }
 
     public function updatedText($propertyText, $propertyKey)
-    {        dd('updateText in SurveyBuilder', $propertyText, $propertyKey);
+    {        //dd('updateText in SurveyBuilder', $propertyText, $propertyKey);
         $this->validateOnly($propertyText);
         Element::where('id', $propertyKey)
             ->update(['text' => $propertyText]);
@@ -158,7 +168,7 @@ class SurveyBuilder extends Component
         $preFinal = Element::create([
             'survey_id' => $this->survey,
             'type'      => 'radio',
-            'text'      => 'Wie viele Mitarbeiter hat Ihr Unternehmen ?',
+            'text'      => 'Wie viele Fahrzeuge haben Sie im Unternehmen?',
             'parent_id' => 0,
             'position'  => $this->nextPosition            
         ]);
@@ -202,9 +212,15 @@ class SurveyBuilder extends Component
             ],
             [
                 'survey_id' => $this->survey,
-                'text'      => 'über 501',
+                'text'      => '251 bis 500',
                 'parent_id' => $preFinal->id,
                 'position'  => 7
+            ],
+            [
+                'survey_id' => $this->survey,
+                'text'      => 'über 501',
+                'parent_id' => $preFinal->id,
+                'position'  => 8
             ]
         ]);
 

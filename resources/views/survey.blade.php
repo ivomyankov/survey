@@ -3,10 +3,10 @@
 @section('title', 'Umfrage')
 
 @section('header')
-   
+
 @stop
 
-@section('content') 
+@section('content')
     <center><h1 class="p-5 m-5 text-success" style="display:none;"><i class="far fa-thumbs-up"></i>Vielen Dank für Ihre Teilnahme</h1></center>
     <center><h1 class="p-5 m-5 text-waring" style="display:none;"><i class="far fa-thumbs-down"></i>Versuchen Sie bitte später noch mal</h1></center>
 
@@ -16,25 +16,26 @@
         <center><h1 class="p-5 m-5 text-waring"><i class="far fa-thumbs-down"></i>Versuchen Sie bitte später noch mal</h1></center>
     @else
         <form id=form action="{{-- route('submitSurvey',$survey->id) --}}" method="POST" style="max-width: 900px; margin: auto;">
-            <input type="hidden" name="required" value="{{implode(',', $required)}}"> 
+            <input type="hidden" name="required" value="{{implode(',', $required)}}">
 
             <div class="d-flex justify-content-center">
                 @if (in_array(substr_replace( $survey->name, '', -5 ), array("Aussteller", "Messebesucher", "Dienstleister") ))
-<img src="{{ asset('/img/flotte.png') }}" style="float:left;margin-right: 50px;height: 100px;margin-top: 50px;" >  
+<img src="{{ asset('/img/flotte.png') }}" style="float:left;margin-right: 50px;height: 100px;margin-top: 50px;" >
                 @endif
                 <h1 class="display-3 text-info" >{{$survey->name}}</h1>
             </div>
             @if($elements)
                 @foreach($elements as $element)
-                    @livewire('front.form-builder', ['element'=>$element, 'options'=>$options ])                  
-                @endforeach            
+                    @livewire('front.form-builder', ['element'=>$element, 'options'=>$options ])
+                @endforeach
                 <div class="d-flex justify-content-center">
                     <button type="button" onclick="submtt()" class="btn btn-info w-25 my-5" value="Send" ><< Weiter >></button>
                 </div>
             @endif
         </form>
-    @endif 
+    @endif
 @stop
+
 
 @push('styles')
   <!-- Font Awesome -->
@@ -47,7 +48,7 @@
         }
 
         #survey-options-menu li{
-            display: block;  
+            display: block;
             text-align: center;
             padding: 5px;
         }
@@ -75,12 +76,12 @@
         }
 
         .error {
-            color:#f00; 
+            color:#f00;
             font-size:12px;
         }
 
-        .vertical-align-center{ 
-            display: flex; 
+        .vertical-align-center{
+            display: flex;
             align-items: center;  /*Aligns vertically center */
         }
 
@@ -91,7 +92,7 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script>    
+    <script>
         function submtt(){
             $( ".rounded" ).removeClass( "errorBorder" );
             $( ".error" ).text( '' );
@@ -106,15 +107,15 @@
             $( ".percentage, .last" ).each(function() {
                 errors = errors+checkSum( $(this).attr('id') );
             });
-            
+
             if(errors == 0) {
                 //alert('go');
                 send();
             }
         };
 
-        function checkSum(id) {     
-            try {            
+        function checkSum(id) {
+            try {
                 var sum = 0;
                 var elements = '';
                 $('#' + id +' :input').each(function (index) {
@@ -125,7 +126,7 @@
                     $( "#"+id ).addClass( "errorBorder" );
                     $("#"+id+" > .error").text(elements.substring(3) + ' = ' + sum + '% < 100%');
                     throw 'Bitte korrigieren Sie Ihre Eingabe.';
-                }            
+                }
                 //alert('send after check');
                 //send();
                 return 0;
@@ -139,7 +140,7 @@
         } // / check()
 
 
-        function send(){ 
+        function send(){
             var data = {};
             let formData = new FormData(document.getElementById('form'));
 
@@ -150,7 +151,7 @@
                     return;
                 }
                 if(!Array.isArray(data[key])){
-                    data[key] = [data[key]];    
+                    data[key] = [data[key]];
                 }
                 data[key].push(value);
             });
@@ -159,10 +160,10 @@
 
             $.ajax({
                 url: "{{url('/')}}/api/h/{{$survey->hash_submit}}",
-                method: "post",    
+                method: "post",
                 dataType: "json",
                 data: json,
-                contentType: "application/json",    
+                contentType: "application/json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'Bearer 6U1s6E2eZ54sm5eUgZEEqzHqng1BEYkovFc96wtL');
                 },
@@ -199,7 +200,7 @@
                     //alert(mark[name]);
                     var id = name.substr(1);
                     $( "#"+id ).addClass( "errorBorder" );
-                }                
+                }
                 //alert(name + ' / ' + val);
             });
             console.log("Mark: ", mark);
@@ -220,25 +221,25 @@
 
         });
 
-        
-        
+
+
 
         var data = JSON.parse('{!!json_encode($options)!!}');
 
         $('.opt').change(function() {
-            var id = $(this).val();            
-            //alert(id);            
-            
-            if (data.hasOwnProperty(id)) {                
+            var id = $(this).val();
+            //alert(id);
+
+            if (data.hasOwnProperty(id)) {
                 //alert('show:' + data[id].show + ' / hide:' + data[id].hide);
                 if(data[id].show !== undefined){
                     //alert(data[id].show);
-                    //if is checkbox and not checked then hide the the id's from hide field 
+                    //if is checkbox and not checked then hide the the id's from hide field
                     if($(this).is(':checkbox') && !$(this).is(':checked')){
                         $(data[id].show).fadeOut();
                     } else {
                         $(data[id].show).fadeIn();
-                    }                    
+                    }
                 }
                 if(data[id].hide !== undefined){
                     //alert(data[id].hide);
@@ -247,17 +248,17 @@
                     $(data[id].hide.replace(/\#/g, '.q')).prop("checked", false).val('');
                 }
 
-            }    
+            }
 
         });
 
-     
-        // if sonstigues is filled or emptied will check or uncheck 
+
+        // if sonstigues is filled or emptied will check or uncheck
         $(".sonstiges").focusout(function(){
             var id = $(this).attr('id');
             id = id.substring(1).slice(0,-2);
             var val = $(this).val();
-            if(val != ''){ 
+            if(val != ''){
                 $( "#"+id ).prop( "checked", true );
             } else {
                 $( "#"+id ).prop('checked', false);
@@ -267,8 +268,8 @@
 
         //if check/radio infront sonstigues is not checked will empty sonstigues
         $("input[type=checkbox], input[type=radio]").change(function () {
-            var questionId = $(this).attr('alt'); 
-            if ($("#"+questionId+" .sons").length > 0){ 
+            var questionId = $(this).attr('alt');
+            if ($("#"+questionId+" .sons").length > 0){
                 let sons = $("#"+questionId+" .sons").attr("id");
                 if(!$("#"+sons).is(':checked')){
                     $('#q'+sons+'_s').val('');
@@ -277,7 +278,7 @@
         });
 
 
-        $(document).ready(function () {        
+        $(document).ready(function () {
 
         });
 
@@ -299,6 +300,6 @@
             });
         }
 
-        
+
     </script>
 @endpush

@@ -6,7 +6,9 @@
             @elseif($element[0]->type == 'hr')
                 <hr>
             @elseif($element[0]->type == 'radio' || $element[0]->type == 'checkbox')
-                @livewire('front.option-element', ['element'=>$element, 'options'=>$options])   
+                @livewire('front.option-element', ['element'=>$element, 'options'=>$options])  
+            @elseif($element[0]->type == 'image-element')
+                @livewire('front.image', ['element'=>$element, 'options'=>$options])   
             @elseif($element[0]->type == 'percentage')
                 @livewire('front.percentage-element', ['element'=>$element, 'options'=>$options])   
             @elseif($element[0]->type == 'multy_radio' || $element[0]->type == 'multy_checkbox')

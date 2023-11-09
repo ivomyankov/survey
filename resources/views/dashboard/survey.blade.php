@@ -5,9 +5,6 @@
 @section('content_header')
     @livewire('survey-name', ['qid'=>$survey->id, 'name'=>$survey->name])
 
-    
-    
-    
 @stop
 
 @section('content')
