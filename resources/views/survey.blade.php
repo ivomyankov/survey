@@ -22,7 +22,7 @@
                 @if (in_array(substr_replace( $survey->name, '', -5 ), array("Aussteller", "Messebesucher", "Dienstleister") ))
 <img src="{{ asset('/img/flotte.png') }}" style="float:left;margin-right: 50px;height: 100px;margin-top: 50px;" >
                 @endif
-                <h1 class="display-3 text-info" >{{$survey->name}}</h1>
+                <h1 class="display-3 " >{{$survey->name}}</h1>
             </div>
             @if($elements)
                 @foreach($elements as $element)
