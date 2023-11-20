@@ -29,7 +29,7 @@
                     @livewire('front.form-builder', ['element'=>$element, 'options'=>$options ])
                 @endforeach
                 <div class="d-flex justify-content-center">
-                    <button type="button" onclick="submtt()" class="btn btn-info w-25 my-5" value="Send" ><< Weiter >></button>
+                    <button type="button" onclick="submtt()" class="btn btn-info w-25 my-5" value="Send" >Meine Antworten abschicken</button>
                 </div>
             @endif
         </form>
