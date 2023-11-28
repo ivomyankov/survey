@@ -2,7 +2,9 @@
     <div class="col-sm-12"> {{--dd($element)--}}
         
             @if($element[0]->type == 'h1' || $element[0]->type == 'h2' || $element[0]->type == 'b' || $element[0]->type == 'p')
-                <{{$element[0]->type}}>{{$element[0]->text}}</{{$element[0]->type}}>
+                <{{$element[0]->type}}>
+                    {{ $this->split() }}
+                </{{$element[0]->type}}>
             @elseif($element[0]->type == 'hr')
                 <hr>
             @elseif($element[0]->type == 'radio' || $element[0]->type == 'checkbox')
