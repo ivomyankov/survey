@@ -17,7 +17,7 @@ class FormBuilder extends Component
 
     public function split()
     {
-        if(in_array($this->element[0]->type, ['h1','h2', 'b', 'p']) && str_contains($this->element[0]->text, '|')){
+        if(in_array($this->element[0]->type, ['h1','h2', 'b', 'p']) ){
             foreach(explode('|', $this->element[0]->text) as $key => $row){
                 echo $key > 0 ? '<br>' : '';
                 echo $row;
