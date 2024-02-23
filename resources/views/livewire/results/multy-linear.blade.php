@@ -3,7 +3,7 @@
         @if($key==0)
             <div class="row">  
                 <b>{{$element[0]->text}}</b>
-                <br><i>Bitte vergeben Sie Noten von 1-5 für die Maßnahmen: „1“ bedeutet „sehr sinnvoll“ und „{{$scale}}“ bedeutet „nicht sinnvoll“. Selbstverständlich können Sie auch alle Noten dazwischen vergeben</i>
+                <br><i>Bitte vergeben Sie Noten von 1-5 für die Maßnahmen: „1“ bedeutet „sehr gut“ und „{{$scale}}“ bedeutet „nicht zufriedenstellend“. Selbstverständlich können Sie auch alle Noten dazwischen vergeben</i>
             </div>
         @else
             <div class="row d-flex justify-content-center mt-5">
