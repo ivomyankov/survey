@@ -6,7 +6,7 @@
     @foreach($element as $key => $option)
         @if($key==0)
             <b>{{$element[0]->text}}</b>
-            <br><i>Bitte vergeben Sie Noten von 1-{{$scale}} für die Maßnahmen: „1“ bedeutet „sehr gut“ und „{{$scale}}“ bedeutet „nicht zufriedenstellend“. Selbstverständlich können Sie auch alle Noten dazwischen vergeben</i>
+            <br><i>Bitte vergeben Sie Noten von 1-{{$scale}} für die Themen: „1“ bedeutet „sehr gut“ und „{{$scale}}“ bedeutet „nicht zufriedenstellend“. Selbstverständlich können Sie auch alle Noten dazwischen vergeben</i>
         @else
             <div class="row d-flex justify-content-center mt-5">
                 <div class="col-sm-{{ $scale < 7 ? (12-$scale) : 12 }} vertical-align-center">{{$element[$key]->text}}</div>
